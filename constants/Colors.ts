@@ -11,31 +11,31 @@ const forestGreen = '#228B22'; // Success green
 
 export const Colors = {
   light: {
-    text: '#1A1A1A', // Darker charcoal for better readability
-    background: '#FEFEFE', // Pure white background
+    text: '#2C2C2C', // Dark text for readability
+    background: '#FFFFFF', // Pure white background
     tint: tintColorLight,
-    icon: '#5A5A5A', // Slightly darker icons
-    tabIconDefault: '#8A8A8A',
+    icon: '#666666', // Medium gray icons
+    tabIconDefault: '#999999',
     tabIconSelected: tintColorLight,
     primary: tintColorLight, // Saffron orange
     secondary: primaryBlue, // Deep blue
     accent: '#FFFFFF',
     success: forestGreen,
     card: '#FFFFFF',
-    border: '#E0E0E0', // Softer border
-    disabled: '#BDBDBD',
-    surface: '#F8F8F8', // Slightly off-white surface
-    warning: '#E65100', // Orange warning to match theme
-    purple: '#7B1FA2',
-    blueGrey: '#546E7A',
+    border: '#E8E8E8', // Light gray border
+    disabled: '#CCCCCC',
+    surface: '#FAFAFA', // Very light gray surface
+    warning: '#FF6B35', // Orange warning
+    purple: '#9C27B0',
+    blueGrey: '#607D8B',
     // Additional light theme colors
-    cardShadow: '#00000008', // Very light shadow
+    cardShadow: '#00000010', // Subtle shadow
     divider: '#F0F0F0',
-    placeholder: '#9E9E9E',
-    overlay: '#00000020',
-    highlight: '#FFF3E0', // Light saffron highlight
-    secondaryText: '#424242',
-    tertiaryText: '#757575',
+    placeholder: '#AAAAAA',
+    overlay: '#00000030',
+    highlight: '#FFF8F0', // Very light saffron highlight
+    secondaryText: '#555555',
+    tertiaryText: '#888888',
   },
   dark: {
     text: '#FFFFFF',
