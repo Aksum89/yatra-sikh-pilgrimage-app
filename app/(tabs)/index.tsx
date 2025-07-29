@@ -73,6 +73,17 @@ export default function HomeScreen() {
 
   const renderGridButton = (button: typeof MAIN_BUTTONS[0]) => {
     const buttonSize = (screenWidth - 60) / 2; // Account for padding and gap
+    
+    // Get appropriate light background color for each button
+    const getButtonBackground = (id: string) => {
+      switch (id) {
+        case 'gurdwaras': return colors.saffronLight || '#FFF3E6';
+        case 'itinerary': return colors.blueLight || '#E3F2FD';
+        case 'events': return colors.greenLight || '#E8F5E8';
+        case 'data': return colors.purpleLight || '#F3E5F5';
+        default: return colors.gridButtonBg || '#F8F9FA';
+      }
+    };
 
     return (
       <TouchableOpacity
@@ -80,8 +91,12 @@ export default function HomeScreen() {
         style={[
           styles.gridButton,
           { 
-            backgroundColor: colors.card,
+            backgroundColor: getButtonBackground(button.id),
             shadowColor: colorScheme === 'dark' ? '#000' : '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 6,
+            elevation: 4,
             borderColor: colors.border,
             width: buttonSize,
             height: buttonSize,
@@ -90,11 +105,9 @@ export default function HomeScreen() {
         onPress={() => navigateToScreen(button.route)}
         activeOpacity={0.8}
       >
-        <View style={[styles.gridIconContainer, { backgroundColor: button.color + '15' }]}>
-          <ThemedText style={[styles.gridButtonIcon, { color: button.color }]}>
-            {button.icon}
-          </ThemedText>
-        </View>
+        <ThemedText style={[styles.gridButtonIcon, { color: button.color, marginBottom: 12 }]}>
+          {button.icon}
+        </ThemedText>
 
         <ThemedText 
           style={[styles.gridButtonTitle, { color: colors.text }]}
@@ -103,7 +116,7 @@ export default function HomeScreen() {
           {button.title}
         </ThemedText>
         <ThemedText 
-          style={[styles.gridButtonSubtitle, { color: colors.icon }]}
+          style={[styles.gridButtonSubtitle, { color: colors.secondaryText }]}
           numberOfLines={1}
         >
           {button.subtitle}
@@ -249,22 +262,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     borderRadius: 20,
-    elevation: 3,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
     borderWidth: 1,
   },
-  gridIconContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
   gridButtonIcon: {
-    fontSize: 28,
+    fontSize: 36,
   },
   gridButtonTitle: {
     fontSize: 16,
