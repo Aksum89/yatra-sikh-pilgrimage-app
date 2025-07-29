@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Alert } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -10,54 +11,38 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const isSmallScreen = screenHeight < 700;
 
-const NAVIGATION_BUTTONS = [
+const MAIN_BUTTONS = [
   {
     id: 'gurdwaras',
     title: 'Gurdwaras',
-    subtitle: 'Discover Sacred Sites',
+    subtitle: 'Sacred Sites',
     icon: '🏛️',
-    route: '/index',
-    color: '#FF9933', // Primary saffron
+    route: '/gurdwaras',
+    color: '#FF9933',
   },
   {
     id: 'itinerary',
     title: 'My Itinerary',
-    subtitle: 'Plan Your Journey',
+    subtitle: 'Plan Journey',
     icon: '📋',
     route: '/itinerary',
-    color: '#000080', // Deep blue
+    color: '#000080',
   },
   {
     id: 'events',
     title: 'Events',
-    subtitle: 'Religious Celebrations',
+    subtitle: 'Celebrations',
     icon: '🎉',
     route: '/events',
-    color: '#228B22', // Forest green
+    color: '#228B22',
   },
   {
     id: 'data',
     title: 'Buy Data',
-    subtitle: 'Network Packages',
+    subtitle: 'Packages',
     icon: '📶',
-    route: '/services',
-    color: '#9C27B0', // Purple
-  },
-  {
-    id: 'sos',
-    title: 'SOS Button',
-    subtitle: 'Emergency Help',
-    icon: '🆘',
-    route: '/emergency',
-    color: '#F44336', // Red
-  },
-  {
-    id: 'auth',
-    title: 'Authorization',
-    subtitle: 'QR Code Entry',
-    icon: '🔐',
-    route: '/services',
-    color: '#607D8B', // Blue grey
+    route: '/data',
+    color: '#9C27B0',
   },
 ];
 
@@ -66,50 +51,64 @@ export default function HomeScreen() {
   const colors = Colors[colorScheme ?? 'light'];
 
   const navigateToScreen = (route: string) => {
-    router.push(route as any);
+    if (route === '/gurdwaras') {
+      router.push('/gurdwaras' as any);
+    } else if (route === '/data') {
+      router.push('/data' as any);
+    } else {
+      router.push(route as any);
+    }
   };
 
-  const renderButton = (button: typeof NAVIGATION_BUTTONS[0], index: number) => {
+  const handleSOSPress = () => {
+    Alert.alert(
+      'SOS Alert Sent',
+      'Emergency alert has been sent to local authorities and your emergency contacts. Help is on the way.',
+      [{ text: 'OK' }]
+    );
+  };
+
+  const handleAuthorizationPress = () => {
+    router.push('/authorization' as any);
+  };
+
+  const renderGridButton = (button: typeof MAIN_BUTTONS[0]) => {
+    const buttonSize = (screenWidth - 60) / 2; // Account for padding and gap
+    
     return (
       <TouchableOpacity
         key={button.id}
         style={[
-          styles.button,
+          styles.gridButton,
           { 
             backgroundColor: colors.card,
             shadowColor: colorScheme === 'dark' ? '#000' : '#000',
             borderColor: colors.border,
+            width: buttonSize,
+            height: buttonSize,
           }
         ]}
         onPress={() => navigateToScreen(button.route)}
         activeOpacity={0.8}
       >
-        <View style={[styles.iconContainer, { backgroundColor: button.color + '15' }]}>
-          <ThemedText style={[styles.buttonIcon, { color: button.color }]}>
+        <View style={[styles.gridIconContainer, { backgroundColor: button.color + '15' }]}>
+          <ThemedText style={[styles.gridButtonIcon, { color: button.color }]}>
             {button.icon}
           </ThemedText>
         </View>
 
-        <View style={styles.buttonTextContainer}>
-          <ThemedText 
-            style={[styles.buttonTitle, { color: colors.text }]}
-            numberOfLines={1}
-          >
-            {button.title}
-          </ThemedText>
-          <ThemedText 
-            style={[styles.buttonSubtitle, { color: colors.icon }]}
-            numberOfLines={1}
-          >
-            {button.subtitle}
-          </ThemedText>
-        </View>
-
-        <View style={[styles.chevron, { backgroundColor: button.color + '20' }]}>
-          <ThemedText style={[styles.chevronText, { color: button.color }]}>
-            ›
-          </ThemedText>
-        </View>
+        <ThemedText 
+          style={[styles.gridButtonTitle, { color: colors.text }]}
+          numberOfLines={1}
+        >
+          {button.title}
+        </ThemedText>
+        <ThemedText 
+          style={[styles.gridButtonSubtitle, { color: colors.icon }]}
+          numberOfLines={1}
+        >
+          {button.subtitle}
+        </ThemedText>
       </TouchableOpacity>
     );
   };
@@ -126,9 +125,71 @@ export default function HomeScreen() {
         </ThemedText>
       </View>
 
-      {/* Navigation Grid */}
+      {/* 2x2 Grid */}
       <View style={styles.gridContainer}>
-        {NAVIGATION_BUTTONS.map((button, index) => renderButton(button, index))}
+        <View style={styles.gridRow}>
+          {renderGridButton(MAIN_BUTTONS[0])}
+          {renderGridButton(MAIN_BUTTONS[1])}
+        </View>
+        <View style={styles.gridRow}>
+          {renderGridButton(MAIN_BUTTONS[2])}
+          {renderGridButton(MAIN_BUTTONS[3])}
+        </View>
+      </View>
+
+      {/* Full-width buttons */}
+      <View style={styles.fullWidthButtonsContainer}>
+        {/* Authorization Button */}
+        <TouchableOpacity
+          style={[styles.fullWidthButton, { backgroundColor: colors.secondary }]}
+          onPress={handleAuthorizationPress}
+          activeOpacity={0.8}
+        >
+          <View style={[styles.fullWidthIconContainer, { backgroundColor: colors.secondary + '20' }]}>
+            <ThemedText style={[styles.fullWidthButtonIcon, { color: colors.accent }]}>
+              🔐
+            </ThemedText>
+          </View>
+          <View style={styles.fullWidthButtonTextContainer}>
+            <ThemedText style={[styles.fullWidthButtonTitle, { color: colors.accent }]}>
+              Authorization
+            </ThemedText>
+            <ThemedText style={[styles.fullWidthButtonSubtitle, { color: colors.accent + 'CC' }]}>
+              QR Code Entry Verification
+            </ThemedText>
+          </View>
+          <View style={[styles.chevron, { backgroundColor: colors.accent + '20' }]}>
+            <ThemedText style={[styles.chevronText, { color: colors.accent }]}>
+              ›
+            </ThemedText>
+          </View>
+        </TouchableOpacity>
+
+        {/* SOS Button */}
+        <TouchableOpacity
+          style={[styles.fullWidthButton, styles.sosButton]}
+          onPress={handleSOSPress}
+          activeOpacity={0.8}
+        >
+          <View style={[styles.fullWidthIconContainer, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
+            <ThemedText style={[styles.fullWidthButtonIcon, { color: '#FFFFFF' }]}>
+              🆘
+            </ThemedText>
+          </View>
+          <View style={styles.fullWidthButtonTextContainer}>
+            <ThemedText style={[styles.fullWidthButtonTitle, { color: '#FFFFFF' }]}>
+              SOS Emergency
+            </ThemedText>
+            <ThemedText style={[styles.fullWidthButtonSubtitle, { color: '#FFFFFFCC' }]}>
+              Tap for immediate emergency assistance
+            </ThemedText>
+          </View>
+          <View style={[styles.chevron, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
+            <ThemedText style={[styles.chevronText, { color: '#FFFFFF' }]}>
+              !
+            </ThemedText>
+          </View>
+        </TouchableOpacity>
       </View>
 
       {/* Footer */}
@@ -165,44 +226,89 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     flex: 1,
-    justifyContent: 'space-evenly',
-    gap: isSmallScreen ? 12 : 16,
+    justifyContent: 'center',
+    gap: 16,
+    marginBottom: 20,
   },
-  button: {
+  gridRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 16,
+  },
+  gridButton: {
     alignItems: 'center',
-    padding: isSmallScreen ? 16 : 20,
-    borderRadius: 16,
+    justifyContent: 'center',
+    padding: 20,
+    borderRadius: 20,
     elevation: 3,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     borderWidth: 1,
-    minHeight: isSmallScreen ? 75 : 85,
   },
-  iconContainer: {
-    width: isSmallScreen ? 50 : 56,
-    height: isSmallScreen ? 50 : 56,
-    borderRadius: isSmallScreen ? 25 : 28,
+  gridIconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  gridButtonIcon: {
+    fontSize: 28,
+  },
+  gridButtonTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  gridButtonSubtitle: {
+    fontSize: 12,
+    opacity: 0.7,
+    textAlign: 'center',
+  },
+  fullWidthButtonsContainer: {
+    gap: 12,
+    marginBottom: 20,
+  },
+  fullWidthButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    borderRadius: 16,
+    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    minHeight: 80,
+  },
+  sosButton: {
+    backgroundColor: '#F44336',
+  },
+  fullWidthIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
-  buttonIcon: {
-    fontSize: isSmallScreen ? 24 : 28,
+  fullWidthButtonIcon: {
+    fontSize: 24,
   },
-  buttonTextContainer: {
+  fullWidthButtonTextContainer: {
     flex: 1,
     justifyContent: 'center',
   },
-  buttonTitle: {
-    fontSize: isSmallScreen ? 16 : 18,
+  fullWidthButtonTitle: {
+    fontSize: 18,
     fontWeight: '600',
     marginBottom: 2,
   },
-  buttonSubtitle: {
-    fontSize: isSmallScreen ? 12 : 14,
-    opacity: 0.7,
+  fullWidthButtonSubtitle: {
+    fontSize: 14,
+    opacity: 0.8,
   },
   chevron: {
     width: 32,
@@ -217,7 +323,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems: 'center',
-    marginTop: 20,
   },
   footerText: {
     fontSize: 12,

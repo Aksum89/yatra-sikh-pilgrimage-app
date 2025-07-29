@@ -29,14 +29,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Discover',
+          title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="gurdwaras"
+        options={{
+          title: 'Gurdwaras',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="building.2.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="itinerary"
         options={{
-          title: 'My Itinerary',
+          title: 'Itinerary',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,
         }}
       />
@@ -48,17 +55,28 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="data"
+        options={{
+          title: 'Data',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="wifi" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="services"
         options={{
-          title: 'Services',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,
+          href: null, // Hide from tab bar since it's accessed from main buttons
         }}
       />
       <Tabs.Screen
         name="emergency"
         options={{
-          title: 'SOS',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="exclamationmark.triangle.fill" color={color} />,
+          href: null, // Hide from tab bar since it's accessed from main buttons
+        }}
+      />
+      <Tabs.Screen
+        name="authorization"
+        options={{
+          href: null, // Hide from tab bar since it's accessed from main buttons
         }}
       />
     </Tabs>
