@@ -1,26 +1,43 @@
+
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Sikh Pilgrimage App Color Scheme
+ * Inspired by traditional Sikh colors and cultural significance
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const tintColorLight = '#FF9933'; // Saffron orange
+const tintColorDark = '#FFFFFF'; // White
+const primaryBlue = '#000080'; // Deep blue
+const forestGreen = '#228B22'; // Success green
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
+    text: '#2C2C2C', // Charcoal
+    background: '#F7F7F7', // Light grey
     tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    icon: '#2C2C2C',
+    tabIconDefault: '#666666',
     tabIconSelected: tintColorLight,
+    primary: tintColorLight,
+    secondary: primaryBlue,
+    accent: '#FFFFFF',
+    success: forestGreen,
+    card: '#FFFFFF',
+    border: '#E0E0E0',
+    disabled: '#CCCCCC',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
+    text: '#FFFFFF',
+    background: '#1A1A1A',
     tint: tintColorDark,
-    icon: '#9BA1A6',
+    icon: '#FFFFFF',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    primary: tintColorLight,
+    secondary: primaryBlue,
+    accent: '#2C2C2C',
+    success: forestGreen,
+    card: '#2C2C2C',
+    border: '#404040',
+    disabled: '#666666',
   },
 };
