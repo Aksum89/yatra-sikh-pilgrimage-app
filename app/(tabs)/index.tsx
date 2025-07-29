@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Dimensions, Alert } from 'react-native';
 import { router } from 'expo-router';
@@ -74,7 +73,7 @@ export default function HomeScreen() {
 
   const renderGridButton = (button: typeof MAIN_BUTTONS[0]) => {
     const buttonSize = (screenWidth - 60) / 2; // Account for padding and gap
-    
+
     return (
       <TouchableOpacity
         key={button.id}
@@ -165,13 +164,23 @@ export default function HomeScreen() {
           </View>
         </TouchableOpacity>
 
-        {/* SOS Button */}
+        {/* SOS Emergency Button */}
         <TouchableOpacity
-          style={[styles.fullWidthButton, styles.sosButton]}
+          style={[
+            styles.fullWidthButton, 
+            { 
+              backgroundColor: '#FF7F7F',
+              shadowColor: '#FF6B6B',
+              shadowOffset: { width: 0, height: 3 },
+              shadowOpacity: 0.3,
+              shadowRadius: 8,
+              elevation: 6,
+            }
+          ]}
           onPress={handleSOSPress}
           activeOpacity={0.8}
         >
-          <View style={[styles.fullWidthIconContainer, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
+          <View style={[styles.fullWidthIconContainer, { backgroundColor: 'rgba(255, 255, 255, 0.25)' }]}>
             <ThemedText style={[styles.fullWidthButtonIcon, { color: '#FFFFFF' }]}>
               🆘
             </ThemedText>
@@ -180,11 +189,11 @@ export default function HomeScreen() {
             <ThemedText style={[styles.fullWidthButtonTitle, { color: '#FFFFFF' }]}>
               SOS Emergency
             </ThemedText>
-            <ThemedText style={[styles.fullWidthButtonSubtitle, { color: '#FFFFFFCC' }]}>
+            <ThemedText style={[styles.fullWidthButtonSubtitle, { color: '#FFFFFF' + 'DD' }]}>
               Tap for immediate emergency assistance
             </ThemedText>
           </View>
-          <View style={[styles.chevron, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
+          <View style={[styles.chevron, { backgroundColor: 'rgba(255, 255, 255, 0.25)' }]}>
             <ThemedText style={[styles.chevronText, { color: '#FFFFFF' }]}>
               !
             </ThemedText>

@@ -11,31 +11,37 @@ const forestGreen = '#228B22'; // Success green
 
 export const Colors = {
   light: {
-    text: '#2C2C2C', // Dark text for readability
-    background: '#FFFFFF', // Pure white background
+    text: '#4A4A4A', // Softer dark text
+    background: '#FAFAFA', // Very light gray background instead of pure white
     tint: tintColorLight,
-    icon: '#666666', // Medium gray icons
-    tabIconDefault: '#999999',
+    icon: '#7A7A7A', // Softer gray icons
+    tabIconDefault: '#A5A5A5',
     tabIconSelected: tintColorLight,
     primary: tintColorLight, // Saffron orange
-    secondary: primaryBlue, // Deep blue
+    secondary: '#4A90E2', // Much lighter, softer blue
     accent: '#FFFFFF',
-    success: forestGreen,
+    success: '#66BB6A', // Softer green
     card: '#FFFFFF',
-    border: '#E8E8E8', // Light gray border
+    border: '#E8E8E8',
     disabled: '#CCCCCC',
-    surface: '#FAFAFA', // Very light gray surface
-    warning: '#FF6B35', // Orange warning
-    purple: '#9C27B0',
-    blueGrey: '#607D8B',
+    surface: '#F5F5F5', // Light gray surface
+    warning: '#FF8A65', // Softer orange warning
+    purple: '#AB47BC', // Softer purple
+    blueGrey: '#78909C', // Softer blue-grey
     // Additional light theme colors
-    cardShadow: '#00000010', // Subtle shadow
+    cardShadow: '#00000008', // Very subtle shadow
     divider: '#F0F0F0',
     placeholder: '#AAAAAA',
-    overlay: '#00000030',
-    highlight: '#FFF8F0', // Very light saffron highlight
-    secondaryText: '#555555',
-    tertiaryText: '#888888',
+    overlay: '#00000020',
+    highlight: '#FFF8F0',
+    secondaryText: '#6A6A6A', // Softer secondary text
+    tertiaryText: '#8A8A8A', // Softer tertiary text
+    // New colors for grid buttons
+    gridButtonBg: '#F8F9FA', // Very light background for grid buttons
+    saffronLight: '#FFF3E6', // Light saffron background
+    blueLight: '#E3F2FD', // Light blue background
+    greenLight: '#E8F5E8', // Light green background
+    purpleLight: '#F3E5F5', // Light purple background
   },
   dark: {
     text: '#FFFFFF',
