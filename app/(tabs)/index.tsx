@@ -87,17 +87,18 @@ export default function HomeScreen() {
     return (
       <TouchableOpacity
         key={button.id}
-        style={[
+        onPress={() => navigateToScreen(button.route)}
+        activeOpacity={0.7}
+        style={({ pressed }) => [
           styles.gridButton,
           { 
             backgroundColor: getButtonBackground(button.id),
             width: buttonSize,
             height: buttonSize,
             borderColor: colors.border,
+            transform: [{ scale: pressed ? 0.95 : 1 }],
           }
         ]}
-        onPress={() => navigateToScreen(button.route)}
-        activeOpacity={0.8}
       >
         <ThemedText style={[styles.gridButtonIcon, { color: button.color }]}>
           {button.icon}
@@ -147,11 +148,12 @@ export default function HomeScreen() {
       <View style={styles.fullWidthButtonsContainer}>
         {/* Authorization Button */}
         <TouchableOpacity
-          style={[
+          style={({ pressed }) => [
             styles.fullWidthButton, 
             { 
               backgroundColor: colors.secondary,
               shadowColor: colorScheme === 'dark' ? '#000' : '#000',
+              transform: [{ scale: pressed ? 0.98 : 1 }],
             }
           ]}
           onPress={handleAuthorizationPress}
@@ -179,9 +181,12 @@ export default function HomeScreen() {
 
         {/* SOS Emergency Button */}
         <TouchableOpacity
-          style={[
+          style={({ pressed }) => [
             styles.fullWidthButton, 
             styles.sosButton,
+            {
+              transform: [{ scale: pressed ? 0.98 : 1 }],
+            }
           ]}
           onPress={handleSOSPress}
           activeOpacity={0.8}
@@ -293,8 +298,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   sosButton: {
-    backgroundColor: '#FF7F7F',
-    shadowColor: '#FF6B6B',
+    backgroundColor: '#DC2626',
+    shadowColor: '#DC2626',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

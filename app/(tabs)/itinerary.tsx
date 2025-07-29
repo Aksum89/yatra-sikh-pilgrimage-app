@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -15,6 +14,7 @@ interface ItineraryItem {
   time: string;
   duration: string;
   image: string;
+  completed?: boolean;
 }
 
 const SAMPLE_ITINERARY: ItineraryItem[] = [
@@ -26,6 +26,7 @@ const SAMPLE_ITINERARY: ItineraryItem[] = [
     time: '6:00 AM',
     duration: '4 hours',
     image: '🌟',
+    completed: true,
   },
   {
     id: 2,
@@ -78,6 +79,14 @@ export default function ItineraryScreen() {
     });
   };
 
+  const toggleComplete = (id: number) => {
+    setItinerary(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
+  };
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <ThemedView style={styles.header}>
@@ -110,7 +119,7 @@ export default function ItineraryScreen() {
                 {itinerary.length}
               </ThemedText>
             </ThemedView>
-            
+
             <ThemedView style={[styles.summaryCard, { backgroundColor: colors.card }]}>
               <ThemedText style={[styles.summaryLabel, { color: colors.icon }]}>
                 Duration
@@ -131,16 +140,29 @@ export default function ItineraryScreen() {
 
               <View style={styles.cardContent}>
                 <View style={styles.cardHeader}>
-                  <View style={styles.cardIcon}>
-                    <ThemedText style={styles.emoji}>{item.image}</ThemedText>
-                  </View>
+                  <TouchableOpacity style={[styles.cardIcon, item.completed && styles.completedIcon]} onPress={() => toggleComplete(item.id)}>
+                    <ThemedText style={[styles.emoji, item.completed && styles.completedEmoji]}>
+                      {item.completed ? '✅' : item.image}
+                    </ThemedText>
+                  </TouchableOpacity>
                   <View style={styles.cardInfo}>
-                    <ThemedText type="subtitle" style={{ color: colors.text }}>
+                    <ThemedText
+                      type="subtitle"
+                      style={[
+                        { color: colors.text },
+                        item.completed && { textDecorationLine: 'line-through', opacity: 0.7 },
+                      ]}
+                    >
                       {item.name}
                     </ThemedText>
                     <ThemedText style={[styles.location, { color: colors.icon }]}>
                       📍 {item.location}
                     </ThemedText>
+                    {item.completed && (
+                      <ThemedText style={[styles.completedText, { color: colors.success }]}>
+                        ✓ Completed
+                      </ThemedText>
+                    )}
                   </View>
                   <TouchableOpacity
                     style={styles.removeButton}
@@ -157,7 +179,7 @@ export default function ItineraryScreen() {
                       {formatDate(item.date)}
                     </ThemedText>
                   </View>
-                  
+
                   <View style={styles.timeItem}>
                     <IconSymbol name="clock" size={16} color={colors.secondary} />
                     <ThemedText style={[styles.timeText, { color: colors.text }]}>
@@ -262,8 +284,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 12,
   },
+  completedIcon: {
+    backgroundColor: 'rgba(0, 200, 0, 0.1)',
+  },
   emoji: {
     fontSize: 28,
+  },
+  completedEmoji: {
+    /* Styles for completed emoji */
   },
   cardInfo: {
     flex: 1,
@@ -298,5 +326,9 @@ const styles = StyleSheet.create({
   shareText: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  completedText: {
+    fontSize: 12,
+    marginTop: 4,
   },
 });
