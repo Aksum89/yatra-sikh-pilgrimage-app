@@ -94,8 +94,13 @@ export default function HomeScreen() {
           { 
             backgroundColor: getButtonBackground(button.id),
             width: buttonSize,
-            height: buttonSize,
+            height: buttonSize * 0.9, // Make height slightly less for better proportions
             borderColor: colors.border,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.08,
+            shadowRadius: 6,
+            elevation: 3,
             transform: [{ scale: pressed ? 0.95 : 1 }],
           }
         ]}
@@ -152,7 +157,11 @@ export default function HomeScreen() {
             styles.fullWidthButton, 
             { 
               backgroundColor: colors.secondary,
-              shadowColor: colorScheme === 'dark' ? '#000' : '#000',
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+              elevation: 3,
               transform: [{ scale: pressed ? 0.98 : 1 }],
             }
           ]}
@@ -185,6 +194,11 @@ export default function HomeScreen() {
             styles.fullWidthButton, 
             styles.sosButton,
             {
+              shadowColor: '#DC2626',
+              shadowOffset: { width: 0, height: 3 },
+              shadowOpacity: 0.3,
+              shadowRadius: 8,
+              elevation: 6,
               transform: [{ scale: pressed ? 0.98 : 1 }],
             }
           ]}
@@ -226,12 +240,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 30,
+    paddingTop: 50,
+    paddingBottom: 20,
   },
   header: {
     alignItems: 'center',
-    marginBottom: isSmallScreen ? 20 : 30,
+    marginBottom: isSmallScreen ? 20 : 25,
   },
   welcomeTitle: {
     fontSize: isSmallScreen ? 24 : 28,
@@ -247,8 +261,8 @@ const styles = StyleSheet.create({
   gridContainer: {
     flex: 1,
     justifyContent: 'center',
+    paddingVertical: 10,
     gap: 16,
-    marginBottom: 20,
   },
   gridRow: {
     flexDirection: 'row',
@@ -258,93 +272,81 @@ const styles = StyleSheet.create({
   gridButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 16,
     borderRadius: 20,
     borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
   },
   gridButtonIcon: {
-    fontSize: 36,
-    marginBottom: 12,
+    fontSize: 32,
+    marginBottom: 10,
   },
   gridButtonTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     marginBottom: 4,
     textAlign: 'center',
   },
   gridButtonSubtitle: {
-    fontSize: 12,
+    fontSize: 11,
     opacity: 0.7,
     textAlign: 'center',
   },
   fullWidthButtonsContainer: {
     gap: 12,
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 15,
   },
   fullWidthButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
+    padding: 18,
     borderRadius: 16,
-    minHeight: 80,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    minHeight: 75,
   },
   sosButton: {
     backgroundColor: '#DC2626',
-    shadowColor: '#DC2626',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 6,
   },
   fullWidthIconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 45,
+    height: 45,
+    borderRadius: 22.5,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
   fullWidthButtonIcon: {
-    fontSize: 24,
+    fontSize: 22,
   },
   fullWidthButtonTextContainer: {
     flex: 1,
     justifyContent: 'center',
   },
   fullWidthButtonTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '600',
     marginBottom: 2,
   },
   fullWidthButtonSubtitle: {
-    fontSize: 14,
+    fontSize: 13,
     opacity: 0.8,
   },
   chevron: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },
   chevronText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   footer: {
     alignItems: 'center',
+    paddingTop: 10,
   },
   footerText: {
-    fontSize: 12,
+    fontSize: 11,
     textAlign: 'center',
     fontStyle: 'italic',
   },
