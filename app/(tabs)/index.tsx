@@ -1,300 +1,227 @@
-
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View, Dimensions } from 'react-native';
+import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
-const GURDWARAS = [
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const isSmallScreen = screenHeight < 700;
+
+const NAVIGATION_BUTTONS = [
   {
-    id: 1,
-    name: 'Gurdwara Darbar Sahib Kartarpur',
-    location: 'Kartarpur, Narowal',
-    description: 'Historic Gurdwara where Guru Nanak Dev Ji spent his last years',
-    significance: 'Final resting place of Guru Nanak Dev Ji',
-    visitingHours: '6:00 AM - 8:00 PM',
-    facilities: ['Langar Hall', 'Accommodation', 'Medical Aid', 'Parking'],
-    image: '🏛️',
+    id: 'gurdwaras',
+    title: 'Gurdwaras',
+    subtitle: 'Discover Sacred Sites',
+    icon: '🏛️',
+    route: '/index',
+    color: '#FF9933', // Primary saffron
   },
   {
-    id: 2,
-    name: 'Gurdwara Panja Sahib',
-    location: 'Hasan Abdal, Attock',
-    description: 'Sacred site with Guru Nanak Dev Ji\'s handprint',
-    significance: 'Handprint of Guru Nanak Dev Ji on a boulder',
-    visitingHours: '5:00 AM - 9:00 PM',
-    facilities: ['Langar Hall', 'Guest House', 'Sacred Pool', 'Parking'],
-    image: '✋',
+    id: 'itinerary',
+    title: 'My Itinerary',
+    subtitle: 'Plan Your Journey',
+    icon: '📋',
+    route: '/itinerary',
+    color: '#000080', // Deep blue
   },
   {
-    id: 3,
-    name: 'Gurdwara Janam Asthan',
-    location: 'Nankana Sahib',
-    description: 'Birthplace of Guru Nanak Dev Ji',
-    significance: 'Birth site of the first Sikh Guru',
-    visitingHours: '4:00 AM - 10:00 PM',
-    facilities: ['Museum', 'Langar Hall', 'Library', 'Accommodation'],
-    image: '🌟',
+    id: 'events',
+    title: 'Events',
+    subtitle: 'Religious Celebrations',
+    icon: '🎉',
+    route: '/events',
+    color: '#228B22', // Forest green
+  },
+  {
+    id: 'data',
+    title: 'Buy Data',
+    subtitle: 'Network Packages',
+    icon: '📶',
+    route: '/services',
+    color: '#9C27B0', // Purple
+  },
+  {
+    id: 'sos',
+    title: 'SOS Button',
+    subtitle: 'Emergency Help',
+    icon: '🆘',
+    route: '/emergency',
+    color: '#F44336', // Red
+  },
+  {
+    id: 'auth',
+    title: 'Authorization',
+    subtitle: 'QR Code Entry',
+    icon: '🔐',
+    route: '/services',
+    color: '#607D8B', // Blue grey
   },
 ];
 
-export default function DiscoverScreen() {
+export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGurdwara, setSelectedGurdwara] = useState<number | null>(null);
 
-  const filteredGurdwaras = GURDWARAS.filter(gurdwara =>
-    gurdwara.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    gurdwara.location.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const addToItinerary = (gurdwara: typeof GURDWARAS[0]) => {
-    Alert.alert(
-      'Added to Itinerary',
-      `${gurdwara.name} has been added to your pilgrimage itinerary.`,
-      [{ text: 'OK' }]
-    );
+  const navigateToScreen = (route: string) => {
+    router.push(route as any);
   };
 
-  const openDirections = (gurdwara: typeof GURDWARAS[0]) => {
-    Alert.alert(
-      'Directions',
-      `Opening directions to ${gurdwara.name} in maps...`,
-      [{ text: 'OK' }]
+  const renderButton = (button: typeof NAVIGATION_BUTTONS[0], index: number) => {
+    return (
+      <TouchableOpacity
+        key={button.id}
+        style={[
+          styles.button,
+          { 
+            backgroundColor: colors.card,
+            shadowColor: colorScheme === 'dark' ? '#000' : '#000',
+            borderColor: colors.border,
+          }
+        ]}
+        onPress={() => navigateToScreen(button.route)}
+        activeOpacity={0.8}
+      >
+        <View style={[styles.iconContainer, { backgroundColor: button.color + '15' }]}>
+          <ThemedText style={[styles.buttonIcon, { color: button.color }]}>
+            {button.icon}
+          </ThemedText>
+        </View>
+
+        <View style={styles.buttonTextContainer}>
+          <ThemedText 
+            style={[styles.buttonTitle, { color: colors.text }]}
+            numberOfLines={1}
+          >
+            {button.title}
+          </ThemedText>
+          <ThemedText 
+            style={[styles.buttonSubtitle, { color: colors.icon }]}
+            numberOfLines={1}
+          >
+            {button.subtitle}
+          </ThemedText>
+        </View>
+
+        <View style={[styles.chevron, { backgroundColor: button.color + '20' }]}>
+          <ThemedText style={[styles.chevronText, { color: button.color }]}>
+            ›
+          </ThemedText>
+        </View>
+      </TouchableOpacity>
     );
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ThemedView style={styles.header}>
-        <ThemedText type="title" style={{ color: colors.primary }}>
-          Discover Sacred Gurdwaras
+    <ThemedView style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={styles.header}>
+        <ThemedText type="title" style={[styles.welcomeTitle, { color: colors.primary }]}>
+          Sikh Pilgrimage
         </ThemedText>
-        <ThemedText style={{ color: colors.text, marginTop: 8 }}>
-          Explore holy sites across Pakistan
+        <ThemedText style={[styles.welcomeSubtitle, { color: colors.text }]}>
+          Your spiritual journey through Pakistan
         </ThemedText>
-      </ThemedView>
+      </View>
 
-      <ThemedView style={[styles.searchContainer, { backgroundColor: colors.card }]}>
-        <IconSymbol name="magnifyingglass" size={20} color={colors.icon} />
-        <TextInput
-          style={[styles.searchInput, { color: colors.text }]}
-          placeholder="Search Gurdwaras or locations..."
-          placeholderTextColor={colors.disabled}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </ThemedView>
+      {/* Navigation Grid */}
+      <View style={styles.gridContainer}>
+        {NAVIGATION_BUTTONS.map((button, index) => renderButton(button, index))}
+      </View>
 
-      {filteredGurdwaras.map((gurdwara) => (
-        <ThemedView key={gurdwara.id} style={[styles.card, { backgroundColor: colors.card }]}>
-          <View style={styles.cardHeader}>
-            <View style={styles.cardIcon}>
-              <ThemedText style={styles.emoji}>{gurdwara.image}</ThemedText>
-            </View>
-            <View style={styles.cardInfo}>
-              <ThemedText type="subtitle" style={{ color: colors.text }}>
-                {gurdwara.name}
-              </ThemedText>
-              <ThemedText style={[styles.location, { color: colors.icon }]}>
-                📍 {gurdwara.location}
-              </ThemedText>
-            </View>
-          </View>
-
-          <ThemedText style={[styles.description, { color: colors.text }]}>
-            {gurdwara.description}
-          </ThemedText>
-
-          <ThemedView style={[styles.significanceBox, { backgroundColor: colors.background }]}>
-            <ThemedText style={[styles.significanceLabel, { color: colors.primary }]}>
-              Historical Significance:
-            </ThemedText>
-            <ThemedText style={[styles.significanceText, { color: colors.text }]}>
-              {gurdwara.significance}
-            </ThemedText>
-          </ThemedView>
-
-          <View style={styles.details}>
-            <ThemedText style={[styles.detailLabel, { color: colors.secondary }]}>
-              Visiting Hours:
-            </ThemedText>
-            <ThemedText style={[styles.detailText, { color: colors.text }]}>
-              {gurdwara.visitingHours}
-            </ThemedText>
-          </View>
-
-          <View style={styles.facilities}>
-            <ThemedText style={[styles.detailLabel, { color: colors.secondary }]}>
-              Facilities:
-            </ThemedText>
-            <View style={styles.facilityTags}>
-              {gurdwara.facilities.map((facility, index) => (
-                <View key={index} style={[styles.facilityTag, { backgroundColor: colors.primary }]}>
-                  <ThemedText style={[styles.facilityText, { color: colors.accent }]}>
-                    {facility}
-                  </ThemedText>
-                </View>
-              ))}
-            </View>
-          </View>
-
-          <View style={styles.cardActions}>
-            <TouchableOpacity
-              style={[styles.actionButton, { backgroundColor: colors.primary }]}
-              onPress={() => addToItinerary(gurdwara)}
-            >
-              <IconSymbol name="plus" size={16} color={colors.accent} />
-              <ThemedText style={[styles.actionText, { color: colors.accent }]}>
-                Add to Itinerary
-              </ThemedText>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={[styles.actionButton, styles.secondaryButton, { borderColor: colors.primary }]}
-              onPress={() => openDirections(gurdwara)}
-            >
-              <IconSymbol name="location" size={16} color={colors.primary} />
-              <ThemedText style={[styles.actionText, { color: colors.primary }]}>
-                Directions
-              </ThemedText>
-            </TouchableOpacity>
-          </View>
-        </ThemedView>
-      ))}
-    </ScrollView>
+      {/* Footer */}
+      <View style={styles.footer}>
+        <ThemedText style={[styles.footerText, { color: colors.icon }]}>
+          ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖਾਲਸਾ, ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫਤਹ
+        </ThemedText>
+      </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 30,
   },
   header: {
-    marginBottom: 20,
-    paddingTop: 20,
+    alignItems: 'center',
+    marginBottom: isSmallScreen ? 20 : 30,
   },
-  searchContainer: {
+  welcomeTitle: {
+    fontSize: isSmallScreen ? 24 : 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  welcomeSubtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    opacity: 0.8,
+  },
+  gridContainer: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    gap: isSmallScreen ? 12 : 16,
+  },
+  button: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 12,
-    marginBottom: 20,
-    elevation: 2,
-    shadowColor: '#000',
+    padding: isSmallScreen ? 16 : 20,
+    borderRadius: 16,
+    elevation: 3,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-  },
-  searchInput: {
-    flex: 1,
-    marginLeft: 12,
-    fontSize: 16,
-  },
-  card: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 12,
-  },
-  cardIcon: {
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  emoji: {
-    fontSize: 32,
-  },
-  cardInfo: {
-    flex: 1,
-  },
-  location: {
-    fontSize: 14,
-    marginTop: 4,
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 16,
-  },
-  significanceBox: {
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  significanceLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  significanceText: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  details: {
-    marginBottom: 12,
-  },
-  detailLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  detailText: {
-    fontSize: 14,
-  },
-  facilities: {
-    marginBottom: 20,
-  },
-  facilityTags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 8,
-  },
-  facilityTag: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginRight: 8,
-    marginBottom: 4,
-  },
-  facilityText: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  cardActions: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  actionButton: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 12,
-    borderRadius: 8,
-    gap: 6,
-  },
-  secondaryButton: {
-    backgroundColor: 'transparent',
     borderWidth: 1,
+    minHeight: isSmallScreen ? 75 : 85,
   },
-  actionText: {
-    fontSize: 14,
+  iconContainer: {
+    width: isSmallScreen ? 50 : 56,
+    height: isSmallScreen ? 50 : 56,
+    borderRadius: isSmallScreen ? 25 : 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  buttonIcon: {
+    fontSize: isSmallScreen ? 24 : 28,
+  },
+  buttonTextContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  buttonTitle: {
+    fontSize: isSmallScreen ? 16 : 18,
     fontWeight: '600',
+    marginBottom: 2,
+  },
+  buttonSubtitle: {
+    fontSize: isSmallScreen ? 12 : 14,
+    opacity: 0.7,
+  },
+  chevron: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  chevronText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  footer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  footerText: {
+    fontSize: 12,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
 });
