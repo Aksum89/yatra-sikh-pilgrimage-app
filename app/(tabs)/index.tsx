@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Dimensions, Alert } from 'react-native';
 import { router } from 'expo-router';
@@ -5,7 +6,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const isSmallScreen = screenHeight < 700;
@@ -25,7 +25,7 @@ const MAIN_BUTTONS = [
     subtitle: 'Plan Journey',
     icon: '📋',
     route: '/itinerary',
-    color: '#000080',
+    color: '#4A90E2',
   },
   {
     id: 'events',
@@ -33,7 +33,7 @@ const MAIN_BUTTONS = [
     subtitle: 'Celebrations',
     icon: '🎉',
     route: '/events',
-    color: '#228B22',
+    color: '#66BB6A',
   },
   {
     id: 'data',
@@ -41,7 +41,7 @@ const MAIN_BUTTONS = [
     subtitle: 'Packages',
     icon: '📶',
     route: '/data',
-    color: '#9C27B0',
+    color: '#AB47BC',
   },
 ];
 
@@ -71,19 +71,18 @@ export default function HomeScreen() {
     router.push('/authorization' as any);
   };
 
+  const getButtonBackground = (id: string) => {
+    switch (id) {
+      case 'gurdwaras': return colors.saffronLight || '#FFF3E6';
+      case 'itinerary': return colors.blueLight || '#E3F2FD';
+      case 'events': return colors.greenLight || '#E8F5E8';
+      case 'data': return colors.purpleLight || '#F3E5F5';
+      default: return colors.gridButtonBg || '#F8F9FA';
+    }
+  };
+
   const renderGridButton = (button: typeof MAIN_BUTTONS[0]) => {
     const buttonSize = (screenWidth - 60) / 2; // Account for padding and gap
-    
-    // Get appropriate light background color for each button
-    const getButtonBackground = (id: string) => {
-      switch (id) {
-        case 'gurdwaras': return colors.saffronLight || '#FFF3E6';
-        case 'itinerary': return colors.blueLight || '#E3F2FD';
-        case 'events': return colors.greenLight || '#E8F5E8';
-        case 'data': return colors.purpleLight || '#F3E5F5';
-        default: return colors.gridButtonBg || '#F8F9FA';
-      }
-    };
 
     return (
       <TouchableOpacity
@@ -92,20 +91,15 @@ export default function HomeScreen() {
           styles.gridButton,
           { 
             backgroundColor: getButtonBackground(button.id),
-            shadowColor: colorScheme === 'dark' ? '#000' : '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 6,
-            elevation: 4,
-            borderColor: colors.border,
             width: buttonSize,
             height: buttonSize,
+            borderColor: colors.border,
           }
         ]}
         onPress={() => navigateToScreen(button.route)}
         activeOpacity={0.8}
       >
-        <ThemedText style={[styles.gridButtonIcon, { color: button.color, marginBottom: 12 }]}>
+        <ThemedText style={[styles.gridButtonIcon, { color: button.color }]}>
           {button.icon}
         </ThemedText>
 
@@ -153,11 +147,17 @@ export default function HomeScreen() {
       <View style={styles.fullWidthButtonsContainer}>
         {/* Authorization Button */}
         <TouchableOpacity
-          style={[styles.fullWidthButton, { backgroundColor: colors.secondary }]}
+          style={[
+            styles.fullWidthButton, 
+            { 
+              backgroundColor: colors.secondary,
+              shadowColor: colorScheme === 'dark' ? '#000' : '#000',
+            }
+          ]}
           onPress={handleAuthorizationPress}
           activeOpacity={0.8}
         >
-          <View style={[styles.fullWidthIconContainer, { backgroundColor: colors.secondary + '20' }]}>
+          <View style={[styles.fullWidthIconContainer, { backgroundColor: colors.accent + '20' }]}>
             <ThemedText style={[styles.fullWidthButtonIcon, { color: colors.accent }]}>
               🔐
             </ThemedText>
@@ -181,14 +181,7 @@ export default function HomeScreen() {
         <TouchableOpacity
           style={[
             styles.fullWidthButton, 
-            { 
-              backgroundColor: '#FF7F7F',
-              shadowColor: '#FF6B6B',
-              shadowOffset: { width: 0, height: 3 },
-              shadowOpacity: 0.3,
-              shadowRadius: 8,
-              elevation: 6,
-            }
+            styles.sosButton,
           ]}
           onPress={handleSOSPress}
           activeOpacity={0.8}
@@ -263,9 +256,15 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 3,
   },
   gridButtonIcon: {
     fontSize: 36,
+    marginBottom: 12,
   },
   gridButtonTitle: {
     fontSize: 16,
@@ -287,14 +286,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     borderRadius: 16,
-    elevation: 3,
+    minHeight: 80,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    minHeight: 80,
+    elevation: 3,
   },
   sosButton: {
-    backgroundColor: '#F44336',
+    backgroundColor: '#FF7F7F',
+    shadowColor: '#FF6B6B',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
   fullWidthIconContainer: {
     width: 50,
