@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   sosButton: {
-    backgroundColor: '#FF5252',
+    backgroundColor: '#EC1B22',
     shadowColor: '#FF6B6B',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
