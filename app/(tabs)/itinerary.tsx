@@ -1,49 +1,19 @@
 
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-
-interface ItineraryItem {
-  id: number;
-  name: string;
-  location: string;
-  date: string;
-  time: string;
-  duration: string;
-  image: string;
-}
-
-const SAMPLE_ITINERARY: ItineraryItem[] = [
-  {
-    id: 1,
-    name: 'Gurdwara Janam Asthan',
-    location: 'Nankana Sahib',
-    date: '2024-03-15',
-    time: '6:00 AM',
-    duration: '4 hours',
-    image: '🌟',
-  },
-  {
-    id: 2,
-    name: 'Gurdwara Panja Sahib',
-    location: 'Hasan Abdal, Attock',
-    date: '2024-03-16',
-    time: '7:00 AM',
-    duration: '3 hours',
-    image: '✋',
-  },
-];
+import { useItinerary } from '@/contexts/ItineraryContext';
 
 export default function ItineraryScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const [itinerary, setItinerary] = useState<ItineraryItem[]>(SAMPLE_ITINERARY);
+  const { itinerary, removeFromItinerary } = useItinerary();
 
-  const removeFromItinerary = (id: number) => {
+  const handleRemoveFromItinerary = (id: number) => {
     Alert.alert(
       'Remove from Itinerary',
       'Are you sure you want to remove this location from your itinerary?',
@@ -53,11 +23,22 @@ export default function ItineraryScreen() {
           text: 'Remove',
           style: 'destructive',
           onPress: () => {
-            setItinerary(prev => prev.filter(item => item.id !== id));
+            removeFromItinerary(id);
           },
         },
       ]
     );
+  };
+
+  const getDirections = (item: any) => {
+    if (item.coordinates) {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${item.coordinates.lat},${item.coordinates.lng}&travelmode=driving`;
+      Linking.openURL(url).catch(() => {
+        Alert.alert('Error', 'Unable to open maps application');
+      });
+    } else {
+      Alert.alert('Error', 'Location coordinates not available');
+    }
   };
 
   const shareItinerary = () => {
@@ -144,7 +125,7 @@ export default function ItineraryScreen() {
                   </View>
                   <TouchableOpacity
                     style={styles.removeButton}
-                    onPress={() => removeFromItinerary(item.id)}
+                    onPress={() => handleRemoveFromItinerary(item.id)}
                   >
                     <IconSymbol name="xmark" size={20} color={colors.icon} />
                   </TouchableOpacity>
@@ -165,7 +146,17 @@ export default function ItineraryScreen() {
                     </ThemedText>
                   </View>
                 </View>
-              </View>
+
+                <TouchableOpacity
+                  style={[styles.directionsButton, { backgroundColor: colors.primary }]}
+                  onPress={() => getDirections(item)}
+                >
+                  <IconSymbol name="location.fill" size={16} color={colors.accent} />
+                  <ThemedText style={[styles.directionsButtonText, { color: colors.accent }]}>
+                    Get Directions
+                  </ThemedText>
+                </TouchableOpacity>
+              </div>
             </ThemedView>
           ))}
 
@@ -297,6 +288,19 @@ const styles = StyleSheet.create({
   },
   shareText: {
     fontSize: 16,
+    fontWeight: '600',
+  },
+  directionsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 12,
+    gap: 8,
+  },
+  directionsButtonText: {
+    fontSize: 14,
     fontWeight: '600',
   },
 });

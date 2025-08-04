@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useItinerary } from '@/contexts/ItineraryContext';
 
 interface Gurdwara {
   id: number;
@@ -102,6 +103,7 @@ export default function GurdwarasScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [selectedGurdwara, setSelectedGurdwara] = useState<number | null>(null);
+  const { addToItinerary, isInItinerary } = useItinerary();
 
   const getDirections = (gurdwara: Gurdwara) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${gurdwara.coordinates.lat},${gurdwara.coordinates.lng}&travelmode=driving`;
@@ -110,7 +112,12 @@ export default function GurdwarasScreen() {
     });
   };
 
-  const addToItinerary = (gurdwara: Gurdwara) => {
+  const handleAddToItinerary = (gurdwara: Gurdwara) => {
+    if (isInItinerary(gurdwara.name)) {
+      Alert.alert('Already Added', `${gurdwara.name} is already in your itinerary.`);
+      return;
+    }
+
     Alert.alert(
       'Add to Itinerary',
       `Would you like to add ${gurdwara.name} to your pilgrimage itinerary?`,
@@ -119,6 +126,12 @@ export default function GurdwarasScreen() {
         {
           text: 'Add',
           onPress: () => {
+            addToItinerary({
+              name: gurdwara.name,
+              location: gurdwara.location,
+              image: gurdwara.image,
+              coordinates: gurdwara.coordinates,
+            });
             Alert.alert('Added!', `${gurdwara.name} has been added to your itinerary.`);
           },
         },
@@ -230,7 +243,7 @@ export default function GurdwarasScreen() {
 
                   <TouchableOpacity
                     style={[styles.actionButton, styles.itineraryButton, { backgroundColor: colors.secondary }]}
-                    onPress={() => addToItinerary(gurdwara)}
+                    onPress={() => handleAddToItinerary(gurdwara)}
                   >
                     <IconSymbol name="plus" size={16} color={colors.accent} />
                     <ThemedText style={[styles.actionButtonText, { color: colors.accent }]}>
