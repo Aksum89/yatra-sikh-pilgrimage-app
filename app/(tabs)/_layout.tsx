@@ -62,6 +62,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="explore"
+        options={{
+          href: null, // Hide from tab bar
+        }}
+      />
+      <Tabs.Screen
         name="services"
         options={{
           href: null, // Hide from tab bar since it's accessed from main buttons
