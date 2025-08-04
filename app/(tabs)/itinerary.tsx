@@ -156,7 +156,7 @@ export default function ItineraryScreen() {
                     Get Directions
                   </ThemedText>
                 </TouchableOpacity>
-              </div>
+              </View>
             </ThemedView>
           ))}
 
