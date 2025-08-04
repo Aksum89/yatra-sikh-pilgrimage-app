@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Dimensions, Alert } from 'react-native';
 import { router } from 'expo-router';
@@ -87,18 +86,17 @@ export default function HomeScreen() {
     return (
       <TouchableOpacity
         key={button.id}
-        onPress={() => navigateToScreen(button.route)}
-        activeOpacity={0.7}
-        style={({ pressed }) => [
+        style={[
           styles.gridButton,
           { 
             backgroundColor: getButtonBackground(button.id),
             width: buttonSize,
             height: buttonSize,
             borderColor: colors.border,
-            transform: [{ scale: pressed ? 0.95 : 1 }],
           }
         ]}
+        onPress={() => navigateToScreen(button.route)}
+        activeOpacity={0.8}
       >
         <ThemedText style={[styles.gridButtonIcon, { color: button.color }]}>
           {button.icon}
@@ -148,12 +146,11 @@ export default function HomeScreen() {
       <View style={styles.fullWidthButtonsContainer}>
         {/* Authorization Button */}
         <TouchableOpacity
-          style={({ pressed }) => [
+          style={[
             styles.fullWidthButton, 
             { 
               backgroundColor: colors.secondary,
               shadowColor: colorScheme === 'dark' ? '#000' : '#000',
-              transform: [{ scale: pressed ? 0.98 : 1 }],
             }
           ]}
           onPress={handleAuthorizationPress}
@@ -181,12 +178,9 @@ export default function HomeScreen() {
 
         {/* SOS Emergency Button */}
         <TouchableOpacity
-          style={({ pressed }) => [
+          style={[
             styles.fullWidthButton, 
             styles.sosButton,
-            {
-              transform: [{ scale: pressed ? 0.98 : 1 }],
-            }
           ]}
           onPress={handleSOSPress}
           activeOpacity={0.8}
@@ -210,13 +204,6 @@ export default function HomeScreen() {
             </ThemedText>
           </View>
         </TouchableOpacity>
-      </View>
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <ThemedText style={[styles.footerText, { color: colors.icon }]}>
-          ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖਾਲਸਾ, ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫਤਹ
-        </ThemedText>
       </View>
     </ThemedView>
   );
@@ -298,8 +285,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   sosButton: {
-    backgroundColor: '#DC2626',
-    shadowColor: '#DC2626',
+    backgroundColor: '#EC1B22',
+    shadowColor: '#FF6B6B',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -339,13 +326,5 @@ const styles = StyleSheet.create({
   chevronText: {
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  footer: {
-    alignItems: 'center',
-  },
-  footerText: {
-    fontSize: 12,
-    textAlign: 'center',
-    fontStyle: 'italic',
   },
 });

@@ -217,6 +217,7 @@ export default function DataScreen() {
               ]}
               onPress={() => setSelectedOperator(operator.id)}
             >
+              <ThemedText style={styles.operatorLogo}>{operator.logo}</ThemedText>
               <ThemedText
                 style={[
                   styles.operatorName,
@@ -372,12 +373,12 @@ const styles = StyleSheet.create({
   },
   operatorToggles: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 12,
   },
   operatorToggle: {
     flex: 1,
     alignItems: 'center',
-    padding: 16,
+    padding: 12,
     borderRadius: 12,
     borderWidth: 2,
   },
@@ -386,7 +387,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   operatorName: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
   },
   plansSection: {
