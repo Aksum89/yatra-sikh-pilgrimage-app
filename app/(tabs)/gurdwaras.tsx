@@ -102,7 +102,6 @@ export default function GurdwarasScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [selectedGurdwara, setSelectedGurdwara] = useState<number | null>(null);
-  const [selectedProvince, setSelectedProvince] = useState<string>('all');
 
   const getDirections = (gurdwara: Gurdwara) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${gurdwara.coordinates.lat},${gurdwara.coordinates.lng}&travelmode=driving`;
@@ -120,19 +119,6 @@ export default function GurdwarasScreen() {
         {
           text: 'Add',
           onPress: () => {
-            // Store in AsyncStorage or global state
-            const itineraryItem = {
-              id: Date.now(),
-              name: gurdwara.name,
-              location: gurdwara.location,
-              date: new Date().toISOString().split('T')[0],
-              time: '6:00 AM',
-              duration: '4 hours',
-              image: gurdwara.image,
-              completed: false,
-            };
-            
-            // For now, using Alert but in real app would use AsyncStorage
             Alert.alert('Added!', `${gurdwara.name} has been added to your itinerary.`);
           },
         },
@@ -164,56 +150,27 @@ export default function GurdwarasScreen() {
           </ThemedText>
         </View>
         <View style={styles.filterTags}>
-          <TouchableOpacity 
-            style={[
-              styles.filterTag, 
-              { backgroundColor: selectedProvince === 'all' ? colors.primary + '20' : colors.background }
-            ]}
-            onPress={() => setSelectedProvince('all')}
-          >
-            <ThemedText style={[
-              styles.filterTagText, 
-              { color: selectedProvince === 'all' ? colors.primary : colors.text }
-            ]}>
+          <View style={[styles.filterTag, { backgroundColor: colors.primary + '20' }]}>
+            <ThemedText style={[styles.filterTagText, { color: colors.primary }]}>
               All Provinces
             </ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={[
-              styles.filterTag, 
-              { backgroundColor: selectedProvince === 'Punjab' ? colors.primary + '20' : colors.background }
-            ]}
-            onPress={() => setSelectedProvince('Punjab')}
-          >
-            <ThemedText style={[
-              styles.filterTagText, 
-              { color: selectedProvince === 'Punjab' ? colors.primary : colors.text }
-            ]}>
+          </View>
+          <View style={[styles.filterTag, { backgroundColor: colors.background }]}>
+            <ThemedText style={[styles.filterTagText, { color: colors.text }]}>
               Punjab
             </ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={[
-              styles.filterTag, 
-              { backgroundColor: selectedProvince === 'Sindh' ? colors.primary + '20' : colors.background }
-            ]}
-            onPress={() => setSelectedProvince('Sindh')}
-          >
-            <ThemedText style={[
-              styles.filterTagText, 
-              { color: selectedProvince === 'Sindh' ? colors.primary : colors.text }
-            ]}>
+          </View>
+          <View style={[styles.filterTag, { backgroundColor: colors.background }]}>
+            <ThemedText style={[styles.filterTagText, { color: colors.text }]}>
               Sindh
             </ThemedText>
-          </TouchableOpacity>
+          </View>
         </View>
       </ThemedView>
 
       {/* Gurdwaras List */}
       <ThemedView style={styles.gurdwarasList}>
-        {GURDWARAS.filter(gurdwara => 
-          selectedProvince === 'all' || gurdwara.province === selectedProvince
-        ).map((gurdwara) => (
+        {GURDWARAS.map((gurdwara) => (
           <ThemedView key={gurdwara.id} style={[styles.gurdwaraCard, { backgroundColor: colors.card }]}>
             <TouchableOpacity
               style={styles.gurdwaraHeader}
