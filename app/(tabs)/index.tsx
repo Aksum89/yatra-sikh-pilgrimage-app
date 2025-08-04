@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Dimensions, Alert } from 'react-native';
 import { router } from 'expo-router';
@@ -206,13 +205,6 @@ export default function HomeScreen() {
           </View>
         </TouchableOpacity>
       </View>
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <ThemedText style={[styles.footerText, { color: colors.icon }]}>
-          ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖਾਲਸਾ, ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫਤਹ
-        </ThemedText>
-      </View>
     </ThemedView>
   );
 }
@@ -293,7 +285,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   sosButton: {
-    backgroundColor: '#FF7F7F',
+    backgroundColor: '#EC1B22',
     shadowColor: '#FF6B6B',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
@@ -334,13 +326,5 @@ const styles = StyleSheet.create({
   chevronText: {
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  footer: {
-    alignItems: 'center',
-  },
-  footerText: {
-    fontSize: 12,
-    textAlign: 'center',
-    fontStyle: 'italic',
   },
 });
