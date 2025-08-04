@@ -15,7 +15,7 @@ type IconSymbolName = keyof typeof MAPPING;
  */
 const MAPPING = {
   'house.fill': 'home',
-  'building.2.fill': 'business',
+  'building.2.fill': 'domain',
   'calendar': 'event',
   'star.fill': 'star',
   'wifi': 'wifi',
@@ -48,5 +48,10 @@ export function IconSymbol({
   style?: StyleProp<TextStyle>;
   weight?: SymbolWeight;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  const mappedName = MAPPING[name];
+  
+  // Fallback to a default icon if mapping doesn't exist
+  const iconName = mappedName || 'help';
+  
+  return <MaterialIcons color={color} size={size} name={iconName} style={style} />;
 }
