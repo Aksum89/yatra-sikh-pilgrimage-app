@@ -30,8 +30,8 @@ const OPERATORS: Operator[] = [
   {
     id: 'jazz',
     name: 'Jazz',
-    color: '#FF6B35',
-    logo: '🎵',
+    color: '#d61921',
+    logo: '',
     plans: [
       {
         id: 1,
@@ -63,8 +63,8 @@ const OPERATORS: Operator[] = [
   {
     id: 'zong',
     name: 'Zong',
-    color: '#8B5CF6',
-    logo: '⚡',
+    color: '#94c021',
+    logo: '',
     plans: [
       {
         id: 4,
@@ -96,8 +96,8 @@ const OPERATORS: Operator[] = [
   {
     id: 'telenor',
     name: 'Telenor',
-    color: '#10B981',
-    logo: '📶',
+    color: '#18a9f8',
+    logo: '',
     plans: [
       {
         id: 7,
@@ -129,8 +129,8 @@ const OPERATORS: Operator[] = [
   {
     id: 'ufone',
     name: 'Ufone',
-    color: '#F59E0B',
-    logo: '☎️',
+    color: '#f38020',
+    logo: '',
     plans: [
       {
         id: 10,
@@ -219,12 +219,11 @@ export default function DataScreen() {
               ]}
               onPress={() => setSelectedOperator(operator.id)}
             >
-              <ThemedText style={styles.operatorLogo}>{operator.logo}</ThemedText>
               <ThemedText
                 style={[
                   styles.operatorName,
                   {
-                    color: selectedOperator === operator.id ? colors.accent : colors.text,
+                    color: selectedOperator === operator.id ? '#FFFFFF' : operator.color,
                   },
                 ]}
               >
@@ -243,8 +242,8 @@ export default function DataScreen() {
               {currentOperator.name} Data Plans
             </ThemedText>
             <View style={[styles.operatorBadge, { backgroundColor: currentOperator.color }]}>
-              <ThemedText style={[styles.operatorBadgeText, { color: colors.accent }]}>
-                {currentOperator.logo} {currentOperator.name}
+              <ThemedText style={[styles.operatorBadgeText, { color: '#FFFFFF' }]}>
+                {currentOperator.name}
               </ThemedText>
             </View>
           </View>
@@ -383,17 +382,21 @@ const styles = StyleSheet.create({
   operatorToggle: {
     flex: 1,
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 12,
+    justifyContent: 'center',
+    padding: 16,
+    borderRadius: 16,
     borderWidth: 2,
-  },
-  operatorLogo: {
-    fontSize: 20,
-    marginBottom: 4,
+    minHeight: 56,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   operatorName: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   plansSection: {
     marginBottom: 20,
