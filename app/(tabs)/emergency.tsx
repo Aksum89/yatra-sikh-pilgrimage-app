@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -59,30 +59,6 @@ const EMERGENCY_CONTACTS: EmergencyContact[] = [
   },
   {
     id: 6,
-    name: 'SGPC Helpline',
-    number: '+92-321-9876543',
-    type: 'tourist',
-    description: 'Shiromani Gurdwara Parbandhak Committee assistance',
-    icon: 'person.2.fill',
-  },
-  {
-    id: 7,
-    name: 'Pakistan Sikh Council',
-    number: '+92-42-37350123',
-    type: 'tourist',
-    description: 'Local Sikh community support and guidance',
-    icon: 'hands.sparkles.fill',
-  },
-  {
-    id: 8,
-    name: 'Evacuee Trust Property Board',
-    number: '+92-51-9202456',
-    type: 'tourist',
-    description: 'Official body managing Sikh religious properties',
-    icon: 'building.columns.fill',
-  },
-  {
-    id: 9,
     name: 'Punjab Tourism Helpline',
     number: '1422',
     type: 'tourist',
@@ -102,7 +78,6 @@ const CONTACT_COLORS = {
 export default function EmergencyScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const [emergencyActive, setEmergencyActive] = useState(false);
 
   const makeEmergencyCall = (contact: EmergencyContact) => {
     Alert.alert(
@@ -121,101 +96,15 @@ export default function EmergencyScreen() {
     );
   };
 
-  const sendSOSAlert = () => {
-    if (emergencyActive) {
-      setEmergencyActive(false);
-      Alert.alert(
-        'SOS Cancelled',
-        'Your emergency alert has been cancelled.',
-        [{ text: 'OK' }]
-      );
-    } else {
-      setEmergencyActive(true);
-      Alert.alert(
-        'SOS Alert Sent',
-        'Emergency alert sent to your emergency contacts and local authorities. Help is on the way.',
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              // Simulate automatic cancellation after 30 seconds
-              setTimeout(() => {
-                setEmergencyActive(false);
-              }, 30000);
-            },
-          },
-        ]
-      );
-    }
-  };
-
-  const shareLocation = () => {
-    Alert.alert(
-      'Share Location',
-      'Your current location will be shared with emergency contacts.',
-      [{ text: 'OK' }]
-    );
-  };
-
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: '#EF4444' }}>
-          Emergency SOS
+          Emergency Contacts
         </ThemedText>
         <ThemedText style={{ color: colors.text, marginTop: 8 }}>
           Quick access to emergency services
         </ThemedText>
-      </ThemedView>
-
-      {/* SOS Button */}
-      <ThemedView style={[styles.sosContainer, { backgroundColor: colors.card }]}>
-        <TouchableOpacity
-          style={[
-            styles.sosButton,
-            {
-              backgroundColor: emergencyActive ? '#10B981' : '#EF4444',
-              transform: [{ scale: emergencyActive ? 1.1 : 1 }],
-            },
-          ]}
-          onPress={sendSOSAlert}
-          activeOpacity={0.8}
-        >
-          <IconSymbol
-            name={emergencyActive ? 'checkmark' : 'exclamationmark.triangle.fill'}
-            size={48}
-            color="#FFFFFF"
-          />
-          <ThemedText style={styles.sosButtonText}>
-            {emergencyActive ? 'CANCEL SOS' : 'SEND SOS'}
-          </ThemedText>
-        </TouchableOpacity>
-
-        <ThemedText style={[styles.sosDescription, { color: colors.icon }]}>
-          {emergencyActive
-            ? 'Emergency alert is active. Tap to cancel.'
-            : 'Press and hold to send emergency alert with your location'
-          }
-        </ThemedText>
-      </ThemedView>
-
-      {/* Location Sharing */}
-      <ThemedView style={[styles.locationCard, { backgroundColor: colors.card }]}>
-        <View style={styles.locationHeader}>
-          <IconSymbol name="location.fill" size={24} color={colors.primary} />
-          <ThemedText type="subtitle" style={{ color: colors.text, marginLeft: 12 }}>
-            Share Your Location
-          </ThemedText>
-        </View>
-        <TouchableOpacity
-          style={[styles.locationButton, { backgroundColor: colors.primary }]}
-          onPress={shareLocation}
-        >
-          <IconSymbol name="square.and.arrow.up" size={16} color={colors.accent} />
-          <ThemedText style={[styles.locationButtonText, { color: colors.accent }]}>
-            Share Location
-          </ThemedText>
-        </TouchableOpacity>
       </ThemedView>
 
       {/* Emergency Contacts */}
@@ -320,69 +209,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     alignItems: 'center',
   },
-  sosContainer: {
-    borderRadius: 20,
-    padding: 30,
-    alignItems: 'center',
-    marginBottom: 20,
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-  },
-  sosButton: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 16,
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-  },
-  sosButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '700',
-    marginTop: 8,
-    textAlign: 'center',
-  },
-  sosDescription: {
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
-  },
-  locationCard: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-  },
-  locationHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  locationButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 12,
-    borderRadius: 8,
-    gap: 8,
-  },
-  locationButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  
   contactsSection: {
     marginBottom: 20,
   },
