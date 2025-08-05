@@ -6,6 +6,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useBottomTabOverflow } from '@/hooks/useBottomTabOverflow';
+
 
 interface DataPlan {
   id: number;
@@ -165,6 +167,7 @@ export default function DataScreen() {
   const colors = Colors[colorScheme ?? 'light'];
   const [selectedOperator, setSelectedOperator] = useState('jazz');
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
+  const bottom = useBottomTabOverflow();
 
   const currentOperator = OPERATORS.find(op => op.id === selectedOperator);
 
@@ -190,7 +193,10 @@ export default function DataScreen() {
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
-      <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      <ScrollView 
+      style={[{ backgroundColor: colors.background }, styles.container]}
+      contentContainerStyle={{ paddingBottom: bottom }}
+    >
         <ThemedView style={styles.header}>
           <ThemedText type="title" style={{ color: colors.primary }}>
             Data Packages

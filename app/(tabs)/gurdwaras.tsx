@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking, Platform, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useItinerary } from '@/contexts/ItineraryContext';
+import { useBottomTabOverflow } from '@/hooks/useBottomTabOverflow';
 
 interface Gurdwara {
   id: number;
@@ -103,8 +103,10 @@ const GURDWARAS: Gurdwara[] = [
 export default function GurdwarasScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const [selectedGurdwara, setSelectedGurdwara] = useState<number | null>(null);
   const { addToItinerary, isInItinerary } = useItinerary();
+  const [selectedGurdwara, setSelectedGurdwara] = useState<number | null>(null);
+  const bottom = useBottomTabOverflow();
+
 
   const getDirections = (gurdwara: Gurdwara) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${gurdwara.coordinates.lat},${gurdwara.coordinates.lng}&travelmode=driving`;
@@ -148,7 +150,7 @@ export default function GurdwarasScreen() {
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <ScrollView 
         style={[styles.scrollView, { backgroundColor: colors.background }]}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[styles.container, { paddingBottom: bottom }]}
         showsVerticalScrollIndicator={true}
       >
       <ThemedView style={styles.header}>
@@ -200,7 +202,7 @@ export default function GurdwarasScreen() {
                   {gurdwara.image}
                 </ThemedText>
               </View>
-              
+
               <View style={styles.gurdwaraInfo}>
                 <ThemedText style={[styles.gurdwaraName, { color: colors.text }]}>
                   {gurdwara.name}
@@ -228,7 +230,7 @@ export default function GurdwarasScreen() {
                 <ThemedText style={[styles.significance, { color: colors.primary }]}>
                   {gurdwara.significance}
                 </ThemedText>
-                
+
                 <ThemedText style={[styles.descriptionTitle, { color: colors.text }]}>
                   Description
                 </ThemedText>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,12 +7,14 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useItinerary } from '@/contexts/ItineraryContext';
+import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 
 export default function ItineraryScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const { itinerary, removeFromItinerary, toggleCompletion, getProgress } = useItinerary();
   const progress = getProgress();
+  const bottom = useBottomTabOverflow();
 
   const handleRemoveFromItinerary = (id: number) => {
     Alert.alert(
@@ -63,7 +64,10 @@ export default function ItineraryScreen() {
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
-      <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      <ScrollView
+        style={[{ backgroundColor: colors.background }, styles.container]}
+        contentContainerStyle={{ paddingBottom: bottom }}
+      >
         <ThemedView style={styles.header}>
           <ThemedText type="title" style={{ color: colors.primary }}>
             My Pilgrimage Itinerary
@@ -90,7 +94,7 @@ export default function ItineraryScreen() {
             <ThemedText type="subtitle" style={{ color: colors.text, marginBottom: 12 }}>
               Your Progress
             </ThemedText>
-            
+
             <View style={styles.progressStats}>
               <View style={styles.progressStat}>
                 <ThemedText style={[styles.progressNumber, { color: colors.primary }]}>
@@ -100,7 +104,7 @@ export default function ItineraryScreen() {
                   Completed
                 </ThemedText>
               </View>
-              
+
               <View style={styles.progressStat}>
                 <ThemedText style={[styles.progressNumber, { color: colors.text }]}>
                   {progress.total - progress.completed}
@@ -109,7 +113,7 @@ export default function ItineraryScreen() {
                   Remaining
                 </ThemedText>
               </View>
-              
+
               <View style={styles.progressStat}>
                 <ThemedText style={[styles.progressNumber, { color: progress.percentage === 100 ? '#4CAF50' : colors.secondary }]}>
                   {progress.percentage}%
@@ -119,16 +123,16 @@ export default function ItineraryScreen() {
                 </ThemedText>
               </View>
             </View>
-            
+
             <View style={[styles.progressBarContainer, { backgroundColor: colors.background }]}>
-              <View 
+              <View
                 style={[
-                  styles.progressBarFill, 
-                  { 
+                  styles.progressBarFill,
+                  {
                     width: `${progress.percentage}%`,
                     backgroundColor: progress.percentage === 100 ? '#4CAF50' : colors.primary
                   }
-                ]} 
+                ]}
               />
             </View>
           </ThemedView>
@@ -142,7 +146,7 @@ export default function ItineraryScreen() {
                 {itinerary.length}
               </ThemedText>
             </ThemedView>
-            
+
             <ThemedView style={[styles.summaryCard, { backgroundColor: colors.card }]}>
               <ThemedText style={[styles.summaryLabel, { color: colors.icon }]}>
                 Duration
@@ -155,18 +159,18 @@ export default function ItineraryScreen() {
 
           {itinerary.map((item, index) => (
             <ThemedView key={item.id} style={[
-              styles.itineraryCard, 
-              { 
+              styles.itineraryCard,
+              {
                 backgroundColor: colors.card,
                 opacity: item.completed ? 0.7 : 1
               }
             ]}>
               <View style={styles.dayIndicator}>
                 <ThemedText style={[
-                  styles.dayText, 
-                  { 
-                    color: colors.accent, 
-                    backgroundColor: item.completed ? '#4CAF50' : colors.primary 
+                  styles.dayText,
+                  {
+                    color: colors.accent,
+                    backgroundColor: item.completed ? '#4CAF50' : colors.primary
                   }
                 ]}>
                   Day {index + 1}
@@ -181,7 +185,7 @@ export default function ItineraryScreen() {
                   <TouchableOpacity
                     style={[
                       styles.completionCheckbox,
-                      { 
+                      {
                         backgroundColor: item.completed ? '#4CAF50' : 'transparent',
                         borderColor: item.completed ? '#4CAF50' : colors.icon
                       }
@@ -192,14 +196,14 @@ export default function ItineraryScreen() {
                       <IconSymbol name="checkmark" size={14} color="white" />
                     )}
                   </TouchableOpacity>
-                  
+
                   <View style={styles.cardIcon}>
                     <ThemedText style={styles.emoji}>{item.image}</ThemedText>
                   </View>
                   <View style={styles.cardInfo}>
-                    <ThemedText 
-                      type="subtitle" 
-                      style={{ 
+                    <ThemedText
+                      type="subtitle"
+                      style={{
                         color: colors.text,
                         textDecorationLine: item.completed ? 'line-through' : 'none'
                       }}
@@ -225,7 +229,7 @@ export default function ItineraryScreen() {
                       {formatDate(item.date)}
                     </ThemedText>
                   </View>
-                  
+
                   <View style={styles.timeItem}>
                     <IconSymbol name="clock" size={16} color={colors.secondary} />
                     <ThemedText style={[styles.timeText, { color: colors.text }]}>
