@@ -96,11 +96,12 @@ export default function EventsScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+    <ThemedView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <ScrollView 
-        style={[styles.container, { backgroundColor: colors.background }]}
-        contentInsetAdjustmentBehavior="automatic"
-        scrollIndicatorInsets={{ top: StatusBar.currentHeight || 0 }}
+        style={[styles.scrollView, { backgroundColor: colors.background }]}
+        contentContainerStyle={[styles.container, { paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 20 : 50 }]}
+        showsVerticalScrollIndicator={true}
+        bounces={false}
       >
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: colors.primary }}>
@@ -221,7 +222,7 @@ export default function EventsScreen() {
         </ThemedView>
       ))}
       </ScrollView>
-    </SafeAreaView>
+    </ThemedView>
   );
 }
 
@@ -229,10 +230,12 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
-  container: {
+  scrollView: {
     flex: 1,
+  },
+  container: {
+    flexGrow: 1,
     padding: 16,
-    paddingTop: 0,
   },
   header: {
     marginBottom: 20,
