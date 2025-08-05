@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, StatusBar, Platform, SafeAreaView } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, StatusBar, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
@@ -96,12 +97,11 @@ export default function EventsScreen() {
   };
 
   return (
-    <ThemedView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <ScrollView 
         style={[styles.scrollView, { backgroundColor: colors.background }]}
-        contentContainerStyle={[styles.container, { paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 20 : 50 }]}
+        contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={true}
-        bounces={false}
       >
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: colors.primary }}>
@@ -222,7 +222,7 @@ export default function EventsScreen() {
         </ThemedView>
       ))}
       </ScrollView>
-    </ThemedView>
+    </SafeAreaView>
   );
 }
 
@@ -239,7 +239,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 20,
-    paddingTop: 20,
   },
   filterContainer: {
     marginBottom: 20,
