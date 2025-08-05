@@ -29,6 +29,12 @@ const MAPPING = {
   'plus': 'add',
   'shield.fill': 'security',
   'doc.on.doc': 'content-copy',
+  'cross.fill': 'local-hospital',
+  'flame.fill': 'local-fire-department',
+  'info.circle.fill': 'info',
+  'mappin.and.ellipse': 'place',
+  'phone.fill': 'phone',
+  'checkmark.circle.fill': 'check-circle',
 } as IconMapping;
 
 /**
