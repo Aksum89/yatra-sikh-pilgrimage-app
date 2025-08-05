@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, StatusBar, Platform } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    paddingTop: 50,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 20 : 50,
   },
   header: {
     marginBottom: 20,
