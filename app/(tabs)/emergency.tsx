@@ -126,7 +126,7 @@ export default function EmergencyScreen() {
             onPress={() => makeEmergencyCall(contact)}
           >
             <View style={[styles.contactIcon, { backgroundColor: CONTACT_COLORS[contact.type] }]}>
-              <IconSymbol name={contact.icon} size={20} color="#FFFFFF" />
+              <IconSymbol name={contact.icon} size={24} color="#FFFFFF" />
             </View>
             
             <View style={styles.contactInfo}>
