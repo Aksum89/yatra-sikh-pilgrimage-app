@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -392,10 +391,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    minHeight: 44,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 18,
+    minHeight: 36,
   },
   operatorToggle: {
     flex: 1,
