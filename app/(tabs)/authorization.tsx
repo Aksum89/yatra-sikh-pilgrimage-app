@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -5,14 +6,12 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 export default function AuthorizationScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [qrCode, setQrCode] = useState('QR-AUTH-12345-ABCD-6789');
   const [lastGenerated, setLastGenerated] = useState(new Date());
-  const bottom = useBottomTabBarHeight();
 
   const regenerateQR = () => {
     const newCode = `QR-AUTH-${Math.random().toString(36).substr(2, 5).toUpperCase()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
@@ -30,10 +29,7 @@ export default function AuthorizationScreen() {
   };
 
   return (
-    <ScrollView
-      style={[{ backgroundColor: colors.background }, styles.container]}
-      contentContainerStyle={{ paddingBottom: bottom }}
-    >
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: colors.primary }}>
           Entry Authorization
@@ -67,11 +63,11 @@ export default function AuthorizationScreen() {
               ))}
             </View>
           </View>
-
+          
           <ThemedText style={[styles.qrCodeText, { color: colors.text }]}>
             {qrCode}
           </ThemedText>
-
+          
           <ThemedText style={[styles.qrTimestamp, { color: colors.icon }]}>
             Generated: {lastGenerated.toLocaleString()}
           </ThemedText>
@@ -193,8 +189,7 @@ export default function AuthorizationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    padding: 16,
   },
   header: {
     marginBottom: 20,

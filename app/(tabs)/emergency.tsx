@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -5,7 +6,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useBottomTabOverflow } from '@/hooks/useBottomTabOverflow';
 
 interface EmergencyContact {
   id: number;
@@ -71,8 +71,6 @@ export default function EmergencyScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [emergencyActive, setEmergencyActive] = useState(false);
-  const bottom = useBottomTabOverflow();
-
 
   const makeEmergencyCall = (contact: EmergencyContact) => {
     Alert.alert(
@@ -128,10 +126,7 @@ export default function EmergencyScreen() {
   };
 
   return (
-    <ScrollView 
-      style={[{ backgroundColor: colors.background }, styles.container]}
-      contentContainerStyle={{ paddingBottom: bottom }}
-    >
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: '#EF4444' }}>
           Emergency SOS
@@ -206,7 +201,7 @@ export default function EmergencyScreen() {
             <View style={[styles.contactIcon, { backgroundColor: CONTACT_COLORS[contact.type] }]}>
               <IconSymbol name={contact.icon} size={24} color="#FFFFFF" />
             </View>
-
+            
             <View style={styles.contactInfo}>
               <ThemedText style={[styles.contactName, { color: colors.text }]}>
                 {contact.name}
@@ -265,8 +260,7 @@ export default function EmergencyScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    padding: 16,
   },
   header: {
     marginBottom: 20,

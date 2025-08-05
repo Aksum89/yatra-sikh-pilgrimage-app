@@ -5,7 +5,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const isSmallScreen = screenHeight < 700;
@@ -48,10 +47,6 @@ const MAIN_BUTTONS = [
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const router = useRouter();
-  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-  const isSmallScreen = screenHeight < 700;
-  const bottom = useBottomTabOverflow();
 
   const navigateToScreen = (route: string) => {
     if (route === '/gurdwaras') {
@@ -124,7 +119,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <ThemedView style={[{ backgroundColor: colors.background }]}>
+    <ThemedView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
         <ThemedText type="title" style={[styles.welcomeTitle, { color: colors.primary }]}>
@@ -219,6 +214,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: isSmallScreen ? 40 : 50,
+    paddingBottom: 20,
   },
   header: {
     alignItems: 'center',

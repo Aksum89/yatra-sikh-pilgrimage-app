@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -5,7 +6,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useBottomTabOverflow } from '@/hooks/useBottomTabOverflow';
 
 interface DataPackage {
   id: number;
@@ -65,7 +65,6 @@ export default function ServicesScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
-  const { bottom } = useBottomTabOverflow();
 
   const activatePackage = (pkg: DataPackage) => {
     Alert.alert(
@@ -97,10 +96,7 @@ export default function ServicesScreen() {
   };
 
   return (
-    <ScrollView 
-      style={[{ backgroundColor: colors.background }, styles.container]}
-      contentContainerStyle={{ paddingBottom: bottom }}
-    >
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: colors.primary }}>
           Pilgrimage Services
@@ -276,8 +272,7 @@ export default function ServicesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    padding: 16,
   },
   header: {
     marginBottom: 20,

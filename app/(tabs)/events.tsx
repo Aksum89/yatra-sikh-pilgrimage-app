@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, StatusBar, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,7 +7,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useBottomTabOverflow } from '@/hooks/useBottomTabOverflow';
 
 interface Event {
   id: number;
@@ -67,7 +67,6 @@ export default function EventsScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const bottom = useBottomTabOverflow();
 
   const filteredEvents = selectedType
     ? EVENTS.filter(event => event.type === selectedType)
@@ -101,7 +100,7 @@ export default function EventsScreen() {
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <ScrollView 
         style={[styles.scrollView, { backgroundColor: colors.background }]}
-        contentContainerStyle={[styles.container, { paddingBottom: bottom }]}
+        contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={true}
       >
       <ThemedView style={styles.header}>
@@ -197,7 +196,7 @@ export default function EventsScreen() {
                   {formatDate(event.date)}
                 </ThemedText>
               </View>
-
+              
               <View style={styles.dateTimeItem}>
                 <IconSymbol name="clock" size={16} color={colors.secondary} />
                 <ThemedText style={[styles.dateTimeText, { color: colors.text }]}>
