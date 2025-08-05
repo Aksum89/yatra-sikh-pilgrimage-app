@@ -123,7 +123,7 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <ThemedText type="title" style={[styles.welcomeTitle, { color: colors.primary }]}>
-          Sikh Pilgrimage
+          Sat Sri Akaal
         </ThemedText>
         <ThemedText style={[styles.welcomeSubtitle, { color: colors.text }]}>
           Your spiritual journey through Pakistan
