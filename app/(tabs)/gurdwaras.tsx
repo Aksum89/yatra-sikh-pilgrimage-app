@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking, Platform, StatusBar } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
@@ -144,7 +144,13 @@ export default function GurdwarasScreen() {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+    <ThemedView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+      <ScrollView 
+        style={[styles.scrollView, { backgroundColor: colors.background }]}
+        contentContainerStyle={[styles.container, { paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 20 : 50 }]}
+        showsVerticalScrollIndicator={true}
+        bounces={false}
+      >
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: colors.primary }}>
           Sacred Gurdwaras
@@ -272,18 +278,24 @@ export default function GurdwarasScreen() {
           </ThemedText>
         </View>
       </ThemedView>
-    </ScrollView>
+      </ScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  container: {
+    flexGrow: 1,
     padding: 16,
   },
   header: {
     marginBottom: 20,
-    paddingTop: 20,
   },
   searchContainer: {
     borderRadius: 16,
