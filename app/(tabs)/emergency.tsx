@@ -81,20 +81,7 @@ export default function EmergencyScreen() {
   const colors = Colors[colorScheme ?? 'light'];
 
   const makeEmergencyCall = (contact: EmergencyContact) => {
-    Alert.alert(
-      'Emergency Call',
-      `Are you sure you want to call ${contact.name} (${contact.number})?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Call Now',
-          style: 'destructive',
-          onPress: () => {
-            Linking.openURL(`tel:${contact.number}`);
-          },
-        },
-      ]
-    );
+    Linking.openURL(`tel:${contact.number}`);
   };
 
   return (
