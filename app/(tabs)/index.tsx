@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: isSmallScreen ? 40 : 50,
-    paddingBottom: 20,
   },
   header: {
     alignItems: 'center',
