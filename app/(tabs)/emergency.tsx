@@ -126,7 +126,7 @@ export default function EmergencyScreen() {
             onPress={() => makeEmergencyCall(contact)}
           >
             <View style={[styles.contactIcon, { backgroundColor: CONTACT_COLORS[contact.type] }]}>
-              <IconSymbol name={contact.icon} size={24} color="#FFFFFF" />
+              <IconSymbol name={contact.icon} size={18} color="#FFFFFF" />
             </View>
             
             <View style={styles.contactInfo}>
@@ -141,7 +141,7 @@ export default function EmergencyScreen() {
               </ThemedText>
             </View>
 
-            <IconSymbol name="phone.fill" size={20} color={CONTACT_COLORS[contact.type]} />
+            <IconSymbol name="phone.fill" size={16} color={CONTACT_COLORS[contact.type]} />
           </TouchableOpacity>
         ))}
       </ThemedView>
@@ -217,20 +217,20 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 12,
     paddingTop: 20,
     alignItems: 'center',
   },
   
   contactsSection: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   contactCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 6,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -238,29 +238,29 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   contactIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   contactInfo: {
     flex: 1,
   },
   contactName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   contactNumber: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '500',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   contactDescription: {
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 10,
+    lineHeight: 14,
   },
   safetyTips: {
     borderRadius: 16,
