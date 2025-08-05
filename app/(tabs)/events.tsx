@@ -7,6 +7,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useItinerary } from '@/contexts/ItineraryContext';
 
 interface Event {
   id: number;
@@ -67,12 +68,28 @@ export default function EventsScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const { addToItinerary, isInItinerary } = useItinerary();
 
   const filteredEvents = selectedType
     ? EVENTS.filter(event => event.type === selectedType)
     : EVENTS;
 
   const addEventToItinerary = (event: Event) => {
+    if (isInItinerary(event.title)) {
+      Alert.alert(
+        'Already Added',
+        `${event.title} is already in your itinerary.`,
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    addToItinerary({
+      name: event.title,
+      location: event.location,
+      image: event.image,
+    });
+
     Alert.alert(
       'Event Added',
       `${event.title} has been added to your itinerary for ${formatDate(event.date)}.`,

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking, Platform, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -200,7 +199,7 @@ export default function GurdwarasScreen() {
                   {gurdwara.image}
                 </ThemedText>
               </View>
-              
+
               <View style={styles.gurdwaraInfo}>
                 <ThemedText style={[styles.gurdwaraName, { color: colors.text }]}>
                   {gurdwara.name}
@@ -228,7 +227,7 @@ export default function GurdwarasScreen() {
                 <ThemedText style={[styles.significance, { color: colors.primary }]}>
                   {gurdwara.significance}
                 </ThemedText>
-                
+
                 <ThemedText style={[styles.descriptionTitle, { color: colors.text }]}>
                   Description
                 </ThemedText>
