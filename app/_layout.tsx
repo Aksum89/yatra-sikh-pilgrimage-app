@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, Platform } from 'react';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ItineraryProvider } from '@/contexts/ItineraryContext';
@@ -26,7 +26,11 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <StatusBar style="auto" />
+        <StatusBar 
+          style={colorScheme === 'dark' ? 'light' : 'dark'} 
+          backgroundColor={colorScheme === 'dark' ? '#121212' : '#FAFAFA'}
+          translucent={false}
+        />
       </ThemeProvider>
     </ItineraryProvider>
   );
