@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, StatusBar, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -195,7 +196,7 @@ export default function EventsScreen() {
                   {formatDate(event.date)}
                 </ThemedText>
               </View>
-
+              
               <View style={styles.dateTimeItem}>
                 <IconSymbol name="clock" size={16} color={colors.secondary} />
                 <ThemedText style={[styles.dateTimeText, { color: colors.text }]}>
@@ -233,9 +234,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    flexGrow: 1,
+    padding: 16,
   },
   header: {
     marginBottom: 20,
