@@ -97,7 +97,11 @@ export default function EventsScreen() {
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
-      <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      <ScrollView 
+        style={[styles.container, { backgroundColor: colors.background }]}
+        contentInsetAdjustmentBehavior="automatic"
+        scrollIndicatorInsets={{ top: StatusBar.currentHeight || 0 }}
+      >
       <ThemedView style={styles.header}>
         <ThemedText type="title" style={{ color: colors.primary }}>
           Sacred Events & Celebrations
