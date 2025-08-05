@@ -126,7 +126,7 @@ export default function EmergencyScreen() {
             onPress={() => makeEmergencyCall(contact)}
           >
             <View style={[styles.contactIcon, { backgroundColor: CONTACT_COLORS[contact.type] }]}>
-              <IconSymbol name={contact.icon} size={18} color="#FFFFFF" />
+              <IconSymbol name={contact.icon} size={16} color="#FFFFFF" />
             </View>
             
             <View style={styles.contactInfo}>
@@ -141,7 +141,7 @@ export default function EmergencyScreen() {
               </ThemedText>
             </View>
 
-            <IconSymbol name="phone.fill" size={16} color={CONTACT_COLORS[contact.type]} />
+            <IconSymbol name="phone.fill" size={14} color={CONTACT_COLORS[contact.type]} />
           </TouchableOpacity>
         ))}
       </ThemedView>
@@ -228,9 +228,9 @@ const styles = StyleSheet.create({
   contactCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 6,
+    padding: 8,
+    borderRadius: 6,
+    marginBottom: 4,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -238,29 +238,29 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   contactIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 10,
   },
   contactInfo: {
     flex: 1,
   },
   contactName: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
-    marginBottom: 1,
+    marginBottom: 0,
   },
   contactNumber: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '500',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   contactDescription: {
-    fontSize: 10,
-    lineHeight: 14,
+    fontSize: 9,
+    lineHeight: 12,
   },
   safetyTips: {
     borderRadius: 16,
