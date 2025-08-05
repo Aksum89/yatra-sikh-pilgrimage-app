@@ -57,6 +57,38 @@ const EMERGENCY_CONTACTS: EmergencyContact[] = [
     description: 'Indian diplomatic mission in Pakistan',
     icon: 'building.2.fill',
   },
+  {
+    id: 6,
+    name: 'SGPC Helpline',
+    number: '+92-321-9876543',
+    type: 'tourist',
+    description: 'Shiromani Gurdwara Parbandhak Committee assistance',
+    icon: 'person.2.fill',
+  },
+  {
+    id: 7,
+    name: 'Pakistan Sikh Council',
+    number: '+92-42-37350123',
+    type: 'tourist',
+    description: 'Local Sikh community support and guidance',
+    icon: 'hands.sparkles.fill',
+  },
+  {
+    id: 8,
+    name: 'Evacuee Trust Property Board',
+    number: '+92-51-9202456',
+    type: 'tourist',
+    description: 'Official body managing Sikh religious properties',
+    icon: 'building.columns.fill',
+  },
+  {
+    id: 9,
+    name: 'Punjab Tourism Helpline',
+    number: '1422',
+    type: 'tourist',
+    description: 'Punjab province tourism assistance',
+    icon: 'mappin.and.ellipse',
+  },
 ];
 
 const CONTACT_COLORS = {
@@ -250,6 +282,27 @@ export default function EmergencyScreen() {
           <IconSymbol name="checkmark.circle.fill" size={16} color={colors.success} />
           <ThemedText style={[styles.tipText, { color: colors.text }]}>
             Keep your phone charged and have backup power
+          </ThemedText>
+        </View>
+
+        <View style={styles.tipItem}>
+          <IconSymbol name="checkmark.circle.fill" size={16} color={colors.success} />
+          <ThemedText style={[styles.tipText, { color: colors.text }]}>
+            Carry copies of passport, visa, and pilgrimage permits
+          </ThemedText>
+        </View>
+
+        <View style={styles.tipItem}>
+          <IconSymbol name="checkmark.circle.fill" size={16} color={colors.success} />
+          <ThemedText style={[styles.tipText, { color: colors.text }]}>
+            Stay connected with your pilgrimage group leader
+          </ThemedText>
+        </View>
+
+        <View style={styles.tipItem}>
+          <IconSymbol name="checkmark.circle.fill" size={16} color={colors.success} />
+          <ThemedText style={[styles.tipText, { color: colors.text }]}>
+            Follow Gurdwara protocols and respect local customs
           </ThemedText>
         </View>
       </ThemedView>
