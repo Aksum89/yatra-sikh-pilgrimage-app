@@ -43,13 +43,7 @@ export default function ItineraryScreen() {
     }
   };
 
-  const shareItinerary = () => {
-    Alert.alert(
-      'Share Itinerary',
-      'Your pilgrimage itinerary has been prepared for sharing.',
-      [{ text: 'OK' }]
-    );
-  };
+  
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -247,15 +241,7 @@ export default function ItineraryScreen() {
             </ThemedView>
           ))}
 
-          <TouchableOpacity
-            style={[styles.shareButton, { backgroundColor: colors.primary }]}
-            onPress={shareItinerary}
-          >
-            <IconSymbol name="square.and.arrow.up" size={20} color={colors.accent} />
-            <ThemedText style={[styles.shareText, { color: colors.accent }]}>
-              Share Itinerary
-            </ThemedText>
-          </TouchableOpacity>
+          
         </>
       )}
       </ScrollView>
@@ -418,19 +404,7 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 14,
   },
-  shareButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-    borderRadius: 12,
-    marginTop: 20,
-    gap: 8,
-  },
-  shareText: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  
   directionsButton: {
     flexDirection: 'row',
     alignItems: 'center',
