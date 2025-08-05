@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.aksum.expoonreplitrev"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,19 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "60ff5d62-c24e-4d51-a4a4-c387313f5537"
+      }
+    },
+    "owner": "aksum",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/60ff5d62-c24e-4d51-a4a4-c387313f5537"
     }
   }
 }
