@@ -34,31 +34,34 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="emergency"
+        options={{
+          title: 'Emergency',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="phone.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="gurdwaras"
         options={{
-          title: 'Gurdwaras',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="building.2.fill" color={color} />,
+          href: null, // Hide from tab bar
         }}
       />
       <Tabs.Screen
         name="itinerary"
         options={{
-          title: 'Itinerary',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,
+          href: null, // Hide from tab bar
         }}
       />
       <Tabs.Screen
         name="events"
         options={{
-          title: 'Events',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
+          href: null, // Hide from tab bar
         }}
       />
       <Tabs.Screen
         name="data"
         options={{
-          title: 'Data',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="wifi" color={color} />,
+          href: null, // Hide from tab bar
         }}
       />
       <Tabs.Screen
@@ -69,12 +72,6 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="services"
-        options={{
-          href: null, // Hide from tab bar since it's accessed from main buttons
-        }}
-      />
-      <Tabs.Screen
-        name="emergency"
         options={{
           href: null, // Hide from tab bar since it's accessed from main buttons
         }}
