@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
@@ -60,15 +61,16 @@ export default function ItineraryScreen() {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ThemedView style={styles.header}>
-        <ThemedText type="title" style={{ color: colors.primary }}>
-          My Pilgrimage Itinerary
-        </ThemedText>
-        <ThemedText style={{ color: colors.text, marginTop: 8 }}>
-          Plan your spiritual journey
-        </ThemedText>
-      </ThemedView>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+      <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+        <ThemedView style={styles.header}>
+          <ThemedText type="title" style={{ color: colors.primary }}>
+            My Pilgrimage Itinerary
+          </ThemedText>
+          <ThemedText style={{ color: colors.text, marginTop: 8 }}>
+            Plan your spiritual journey
+          </ThemedText>
+        </ThemedView>
 
       {itinerary.length === 0 ? (
         <ThemedView style={[styles.emptyState, { backgroundColor: colors.card }]}>
@@ -171,18 +173,21 @@ export default function ItineraryScreen() {
           </TouchableOpacity>
         </>
       )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 16,
   },
   header: {
     marginBottom: 20,
-    paddingTop: 20,
   },
   emptyState: {
     borderRadius: 16,
