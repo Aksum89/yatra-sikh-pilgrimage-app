@@ -87,7 +87,7 @@ export default function ItineraryScreen() {
         <>
           {/* Progress Section */}
           <ThemedView style={[styles.progressSection, { backgroundColor: colors.card }]}>
-            <ThemedText type="subtitle" style={{ color: colors.text, marginBottom: 12 }}>
+            <ThemedText type="subtitle" style={{ color: colors.text, marginBottom: 8 }}>
               Your Progress
             </ThemedText>
             
@@ -306,9 +306,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   progressSection: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 16,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -318,23 +318,23 @@ const styles = StyleSheet.create({
   progressStats: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   progressStat: {
     alignItems: 'center',
   },
   progressNumber: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   progressLabel: {
-    fontSize: 12,
+    fontSize: 11,
     textAlign: 'center',
   },
   progressBarContainer: {
-    height: 8,
-    borderRadius: 4,
+    height: 6,
+    borderRadius: 3,
     overflow: 'hidden',
   },
   progressBarFill: {
