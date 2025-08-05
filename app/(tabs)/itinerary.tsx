@@ -12,7 +12,8 @@ import { useItinerary } from '@/contexts/ItineraryContext';
 export default function ItineraryScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const { itinerary, removeFromItinerary } = useItinerary();
+  const { itinerary, removeFromItinerary, toggleCompletion, getProgress } = useItinerary();
+  const progress = getProgress();
 
   const handleRemoveFromItinerary = (id: number) => {
     Alert.alert(
@@ -84,6 +85,54 @@ export default function ItineraryScreen() {
         </ThemedView>
       ) : (
         <>
+          {/* Progress Section */}
+          <ThemedView style={[styles.progressSection, { backgroundColor: colors.card }]}>
+            <ThemedText type="subtitle" style={{ color: colors.text, marginBottom: 12 }}>
+              Your Progress
+            </ThemedText>
+            
+            <View style={styles.progressStats}>
+              <View style={styles.progressStat}>
+                <ThemedText style={[styles.progressNumber, { color: colors.primary }]}>
+                  {progress.completed}
+                </ThemedText>
+                <ThemedText style={[styles.progressLabel, { color: colors.icon }]}>
+                  Completed
+                </ThemedText>
+              </View>
+              
+              <View style={styles.progressStat}>
+                <ThemedText style={[styles.progressNumber, { color: colors.text }]}>
+                  {progress.total - progress.completed}
+                </ThemedText>
+                <ThemedText style={[styles.progressLabel, { color: colors.icon }]}>
+                  Remaining
+                </ThemedText>
+              </View>
+              
+              <View style={styles.progressStat}>
+                <ThemedText style={[styles.progressNumber, { color: progress.percentage === 100 ? '#4CAF50' : colors.secondary }]}>
+                  {progress.percentage}%
+                </ThemedText>
+                <ThemedText style={[styles.progressLabel, { color: colors.icon }]}>
+                  Complete
+                </ThemedText>
+              </View>
+            </View>
+            
+            <View style={[styles.progressBarContainer, { backgroundColor: colors.background }]}>
+              <View 
+                style={[
+                  styles.progressBarFill, 
+                  { 
+                    width: `${progress.percentage}%`,
+                    backgroundColor: progress.percentage === 100 ? '#4CAF50' : colors.primary
+                  }
+                ]} 
+              />
+            </View>
+          </ThemedView>
+
           <View style={styles.summary}>
             <ThemedView style={[styles.summaryCard, { backgroundColor: colors.card }]}>
               <ThemedText style={[styles.summaryLabel, { color: colors.icon }]}>
@@ -105,20 +154,56 @@ export default function ItineraryScreen() {
           </View>
 
           {itinerary.map((item, index) => (
-            <ThemedView key={item.id} style={[styles.itineraryCard, { backgroundColor: colors.card }]}>
+            <ThemedView key={item.id} style={[
+              styles.itineraryCard, 
+              { 
+                backgroundColor: colors.card,
+                opacity: item.completed ? 0.7 : 1
+              }
+            ]}>
               <View style={styles.dayIndicator}>
-                <ThemedText style={[styles.dayText, { color: colors.accent, backgroundColor: colors.primary }]}>
+                <ThemedText style={[
+                  styles.dayText, 
+                  { 
+                    color: colors.accent, 
+                    backgroundColor: item.completed ? '#4CAF50' : colors.primary 
+                  }
+                ]}>
                   Day {index + 1}
                 </ThemedText>
+                {item.completed && (
+                  <ThemedText style={styles.completedBadge}>✓</ThemedText>
+                )}
               </View>
 
               <View style={styles.cardContent}>
                 <View style={styles.cardHeader}>
+                  <TouchableOpacity
+                    style={[
+                      styles.completionCheckbox,
+                      { 
+                        backgroundColor: item.completed ? '#4CAF50' : 'transparent',
+                        borderColor: item.completed ? '#4CAF50' : colors.icon
+                      }
+                    ]}
+                    onPress={() => toggleCompletion(item.id)}
+                  >
+                    {item.completed && (
+                      <IconSymbol name="checkmark" size={14} color="white" />
+                    )}
+                  </TouchableOpacity>
+                  
                   <View style={styles.cardIcon}>
                     <ThemedText style={styles.emoji}>{item.image}</ThemedText>
                   </View>
                   <View style={styles.cardInfo}>
-                    <ThemedText type="subtitle" style={{ color: colors.text }}>
+                    <ThemedText 
+                      type="subtitle" 
+                      style={{ 
+                        color: colors.text,
+                        textDecorationLine: item.completed ? 'line-through' : 'none'
+                      }}
+                    >
                       {item.name}
                     </ThemedText>
                     <ThemedText style={[styles.location, { color: colors.icon }]}>
@@ -219,6 +304,57 @@ const styles = StyleSheet.create({
   summaryLabel: {
     fontSize: 14,
     marginBottom: 4,
+  },
+  progressSection: {
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  progressStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  progressStat: {
+    alignItems: 'center',
+  },
+  progressNumber: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  progressLabel: {
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  progressBarContainer: {
+    height: 8,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    borderRadius: 4,
+    transition: 'width 0.3s ease',
+  },
+  completionCheckbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
+  completedBadge: {
+    fontSize: 16,
+    color: '#4CAF50',
+    marginLeft: 8,
   },
   itineraryCard: {
     borderRadius: 16,
