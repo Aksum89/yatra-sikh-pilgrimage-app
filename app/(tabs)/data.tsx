@@ -206,24 +206,23 @@ export default function DataScreen() {
         <ThemedText style={[styles.sectionTitle, { color: colors.text }]}>
           Select Network Operator
         </ThemedText>
-        <View style={styles.operatorToggles}>
+        <View style={[styles.operatorTogglesPill, { backgroundColor: '#E5E5E5' }]}>
           {OPERATORS.map((operator) => (
             <TouchableOpacity
               key={operator.id}
               style={[
-                styles.operatorToggle,
+                styles.operatorTogglePill,
                 {
-                  backgroundColor: selectedOperator === operator.id ? operator.color : colors.background,
-                  borderColor: operator.color,
+                  backgroundColor: selectedOperator === operator.id ? operator.color : 'transparent',
                 },
               ]}
               onPress={() => setSelectedOperator(operator.id)}
             >
               <ThemedText
                 style={[
-                  styles.operatorName,
+                  styles.operatorNamePill,
                   {
-                    color: selectedOperator === operator.id ? '#FFFFFF' : operator.color,
+                    color: selectedOperator === operator.id ? '#FFFFFF' : '#000000',
                   },
                 ]}
               >
@@ -379,6 +378,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
   },
+  operatorTogglesPill: {
+    flexDirection: 'row',
+    borderRadius: 25,
+    padding: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  operatorTogglePill: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    minHeight: 44,
+  },
   operatorToggle: {
     flex: 1,
     alignItems: 'center',
@@ -396,6 +414,11 @@ const styles = StyleSheet.create({
   operatorName: {
     fontSize: 14,
     fontWeight: '700',
+    textAlign: 'center',
+  },
+  operatorNamePill: {
+    fontSize: 14,
+    fontWeight: '600',
     textAlign: 'center',
   },
   plansSection: {
