@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View, Alert, Linking } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
@@ -97,15 +98,20 @@ export default function EmergencyScreen() {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ThemedView style={styles.header}>
-        <ThemedText type="title" style={{ color: '#EF4444' }}>
-          Emergency Contacts
-        </ThemedText>
-        <ThemedText style={{ color: colors.text, marginTop: 8 }}>
-          Quick access to emergency services
-        </ThemedText>
-      </ThemedView>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+      <ScrollView 
+        style={[styles.scrollView, { backgroundColor: colors.background }]}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={true}
+      >
+        <ThemedView style={styles.header}>
+          <ThemedText type="title" style={{ color: '#EF4444' }}>
+            Emergency Contacts
+          </ThemedText>
+          <ThemedText style={{ color: colors.text, marginTop: 8 }}>
+            Quick access to emergency services
+          </ThemedText>
+        </ThemedView>
 
       {/* Emergency Contacts */}
       <ThemedView style={styles.contactsSection}>
@@ -195,18 +201,24 @@ export default function EmergencyScreen() {
           </ThemedText>
         </View>
       </ThemedView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  container: {
     padding: 16,
   },
   header: {
     marginBottom: 20,
-    paddingTop: 60,
+    paddingTop: 20,
     alignItems: 'center',
   },
   
