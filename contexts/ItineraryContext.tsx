@@ -1,5 +1,6 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ItineraryItem {
   id: number;
@@ -24,6 +25,8 @@ interface ItineraryContextType {
 
 const ItineraryContext = createContext<ItineraryContextType | undefined>(undefined);
 
+const STORAGE_KEY = '@pilgrimage_itinerary';
+
 export const useItinerary = () => {
   const context = useContext(ItineraryContext);
   if (!context) {
@@ -34,6 +37,36 @@ export const useItinerary = () => {
 
 export const ItineraryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [itinerary, setItinerary] = useState<ItineraryItem[]>([]);
+
+  // Load itinerary from storage on app start
+  useEffect(() => {
+    loadItinerary();
+  }, []);
+
+  // Save itinerary to storage whenever it changes
+  useEffect(() => {
+    saveItinerary();
+  }, [itinerary]);
+
+  const loadItinerary = async () => {
+    try {
+      const storedItinerary = await AsyncStorage.getItem(STORAGE_KEY);
+      if (storedItinerary) {
+        const parsedItinerary = JSON.parse(storedItinerary);
+        setItinerary(parsedItinerary);
+      }
+    } catch (error) {
+      console.error('Error loading itinerary:', error);
+    }
+  };
+
+  const saveItinerary = async () => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(itinerary));
+    } catch (error) {
+      console.error('Error saving itinerary:', error);
+    }
+  };
 
   const addToItinerary = (item: Omit<ItineraryItem, 'id' | 'date' | 'time' | 'duration'>) => {
     const newItem: ItineraryItem = {
