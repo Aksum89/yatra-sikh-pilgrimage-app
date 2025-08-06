@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScrollView, StyleSheet, View, StatusBar, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -97,7 +96,7 @@ export default function TravelEssentialsScreen() {
           {tipData.category}
         </ThemedText>
       </View>
-      
+
       <View style={styles.tipsContainer}>
         {tipData.tips.map((tip, index) => (
           <View key={index} style={styles.tipRow}>
@@ -117,12 +116,12 @@ export default function TravelEssentialsScreen() {
         barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
         backgroundColor={colors.background}
       />
-      
+
       {/* Header */}
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
         <View style={styles.headerContent}>
           <View style={[styles.headerIcon, { backgroundColor: colors.primary + '20' }]}>
-            <IconSymbol name="backpack" size={32} color={colors.primary} />
+            <ThemedText style={styles.headerIconEmoji}>🎒</ThemedText>
           </View>
           <View>
             <ThemedText type="title" style={[styles.headerTitle, { color: colors.text }]}>
@@ -194,6 +193,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
+  },
+  headerIconEmoji: {
+    fontSize: 32,
   },
   headerTitle: {
     fontSize: 24,
