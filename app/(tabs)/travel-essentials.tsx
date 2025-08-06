@@ -1,5 +1,6 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, StatusBar, Platform } from 'react-native';
+
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, View, StatusBar, Platform, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -82,9 +83,91 @@ const essentialTips = [
   }
 ];
 
+const exchangeRates = [
+  {
+    currency: 'Indian Rupee (INR)',
+    symbol: '₹',
+    flag: '🇮🇳',
+    rate: '1 INR = 3.25 PKR',
+    notes: 'Most commonly used by Sikh pilgrims'
+  },
+  {
+    currency: 'US Dollar (USD)',
+    symbol: '$',
+    flag: '🇺🇸',
+    rate: '1 USD = 278.50 PKR',
+    notes: 'Widely accepted, good for emergencies'
+  },
+  {
+    currency: 'British Pound (GBP)',
+    symbol: '£',
+    flag: '🇬🇧',
+    rate: '1 GBP = 352.75 PKR',
+    notes: 'Accepted at major establishments'
+  },
+  {
+    currency: 'Euro (EUR)',
+    symbol: '€',
+    flag: '🇪🇺',
+    rate: '1 EUR = 291.20 PKR',
+    notes: 'Limited acceptance, exchange recommended'
+  },
+  {
+    currency: 'Canadian Dollar (CAD)',
+    symbol: 'C$',
+    flag: '🇨🇦',
+    rate: '1 CAD = 195.80 PKR',
+    notes: 'Exchange at banks or authorized dealers'
+  },
+  {
+    currency: 'Australian Dollar (AUD)',
+    symbol: 'A$',
+    flag: '🇦🇺',
+    rate: '1 AUD = 174.45 PKR',
+    notes: 'Limited acceptance, exchange recommended'
+  }
+];
+
+const currencyTips = [
+  {
+    title: 'Where to Exchange',
+    icon: '🏦',
+    items: [
+      'Banks offer the best exchange rates',
+      'Authorized money changers are reliable',
+      'Airport exchanges available but rates may vary',
+      'Avoid street money changers',
+      'Hotels may exchange but at higher rates'
+    ]
+  },
+  {
+    title: 'Payment Methods',
+    icon: '💳',
+    items: [
+      'Cash is king for small vendors and local transport',
+      'Credit cards accepted at hotels and restaurants',
+      'ATMs widely available in cities',
+      'Mobile payment apps like JazzCash, EasyPaisa',
+      'Keep small denominations for tips and donations'
+    ]
+  },
+  {
+    title: 'Banking Tips',
+    icon: '🏧',
+    items: [
+      'Inform your bank about travel plans',
+      'Carry multiple cards as backup',
+      'Note emergency contact numbers for your bank',
+      'Check international transaction fees',
+      'Use bank ATMs when possible for security'
+    ]
+  }
+];
+
 export default function TravelEssentialsScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
+  const [selectedSection, setSelectedSection] = useState('tips');
 
   const renderTipCard = (tipData: typeof essentialTips[0]) => (
     <ThemedView key={tipData.category} style={[styles.tipCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -110,6 +193,133 @@ export default function TravelEssentialsScreen() {
     </ThemedView>
   );
 
+  const renderExchangeRateCard = (rateData: typeof exchangeRates[0], index: number) => (
+    <ThemedView key={index} style={[styles.rateCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={styles.rateHeader}>
+        <View style={styles.currencyInfo}>
+          <ThemedText style={styles.flagIcon}>{rateData.flag}</ThemedText>
+          <View style={styles.currencyDetails}>
+            <ThemedText style={[styles.currencyName, { color: colors.text }]}>
+              {rateData.currency}
+            </ThemedText>
+            <ThemedText style={[styles.currencySymbol, { color: colors.secondaryText }]}>
+              {rateData.symbol}
+            </ThemedText>
+          </View>
+        </View>
+        <View style={[styles.rateContainer, { backgroundColor: colors.primary + '15' }]}>
+          <ThemedText style={[styles.exchangeRate, { color: colors.primary }]}>
+            {rateData.rate}
+          </ThemedText>
+        </View>
+      </View>
+      <ThemedText style={[styles.rateNotes, { color: colors.secondaryText }]}>
+        {rateData.notes}
+      </ThemedText>
+    </ThemedView>
+  );
+
+  const renderCurrencyTipCard = (tipData: typeof currencyTips[0]) => (
+    <ThemedView key={tipData.title} style={[styles.tipCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <View style={styles.tipHeader}>
+        <View style={[styles.iconContainer, { backgroundColor: colors.primary + '20' }]}>
+          <ThemedText style={styles.categoryIcon}>{tipData.icon}</ThemedText>
+        </View>
+        <ThemedText type="subtitle" style={[styles.categoryTitle, { color: colors.text }]}>
+          {tipData.title}
+        </ThemedText>
+      </View>
+
+      <View style={styles.tipsContainer}>
+        {tipData.items.map((item, index) => (
+          <View key={index} style={styles.tipRow}>
+            <View style={[styles.bullet, { backgroundColor: colors.tint }]} />
+            <ThemedText style={[styles.tipText, { color: colors.text }]}>
+              {item}
+            </ThemedText>
+          </View>
+        ))}
+      </View>
+    </ThemedView>
+  );
+
+  const renderTipsSection = () => (
+    <>
+      {/* Welcome Message */}
+      <ThemedView style={[styles.welcomeCard, { backgroundColor: colors.secondary }]}>
+        <ThemedText style={[styles.welcomeTitle, { color: colors.accent }]}>
+          Welcome to Pakistan! 🇵🇰
+        </ThemedText>
+        <ThemedText style={[styles.welcomeText, { color: colors.accent }]}>
+          These essential tips will help ensure your pilgrimage is safe, respectful, and memorable. 
+          Please read through each section carefully before your journey.
+        </ThemedText>
+      </ThemedView>
+
+      {/* Tips Cards */}
+      {essentialTips.map(renderTipCard)}
+
+      {/* Emergency Note */}
+      <ThemedView style={[styles.emergencyCard, { backgroundColor: '#FFF3E0', borderColor: '#FF9800' }]}>
+        <View style={styles.emergencyHeader}>
+          <IconSymbol name="exclamationmark.triangle.fill" size={24} color="#FF9800" />
+          <ThemedText type="subtitle" style={[styles.emergencyTitle, { color: '#E65100' }]}>
+            Important Reminder
+          </ThemedText>
+        </View>
+        <ThemedText style={[styles.emergencyText, { color: '#BF360C' }]}>
+          Always keep your emergency contacts accessible and inform someone about your daily itinerary. 
+          Use the Emergency tab in this app for quick access to help.
+        </ThemedText>
+      </ThemedView>
+    </>
+  );
+
+  const renderCurrencySection = () => (
+    <>
+      {/* Currency Info Header */}
+      <ThemedView style={[styles.welcomeCard, { backgroundColor: colors.secondary }]}>
+        <ThemedText style={[styles.welcomeTitle, { color: colors.accent }]}>
+          Pakistani Rupee (PKR) 💰
+        </ThemedText>
+        <ThemedText style={[styles.welcomeText, { color: colors.accent }]}>
+          Current exchange rates and money tips for your visit. Rates are approximate and may vary.
+          Last updated: {new Date().toLocaleDateString()}
+        </ThemedText>
+      </ThemedView>
+
+      {/* Exchange Rates */}
+      <ThemedView style={styles.sectionContainer}>
+        <ThemedText type="subtitle" style={[styles.sectionTitle, { color: colors.text }]}>
+          Exchange Rates
+        </ThemedText>
+        {exchangeRates.map(renderExchangeRateCard)}
+      </ThemedView>
+
+      {/* Currency Tips */}
+      <ThemedView style={styles.sectionContainer}>
+        <ThemedText type="subtitle" style={[styles.sectionTitle, { color: colors.text }]}>
+          Money & Banking Tips
+        </ThemedText>
+        {currencyTips.map(renderCurrencyTipCard)}
+      </ThemedView>
+
+      {/* Important Note */}
+      <ThemedView style={[styles.emergencyCard, { backgroundColor: '#E8F5E8', borderColor: '#4CAF50' }]}>
+        <View style={styles.emergencyHeader}>
+          <IconSymbol name="info.circle.fill" size={24} color="#4CAF50" />
+          <ThemedText type="subtitle" style={[styles.emergencyTitle, { color: '#2E7D32' }]}>
+            Exchange Rate Notice
+          </ThemedText>
+        </View>
+        <ThemedText style={[styles.emergencyText, { color: '#1B5E20' }]}>
+          Exchange rates fluctuate daily. Check current rates at your bank or authorized dealers. 
+          Avoid unofficial money changers and always count your money before leaving the counter.
+        </ThemedText>
+      </ThemedView>
+    </>
+  );
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <StatusBar 
@@ -128,45 +338,67 @@ export default function TravelEssentialsScreen() {
               Travel Essentials
             </ThemedText>
             <ThemedText style={[styles.headerSubtitle, { color: colors.secondaryText }]}>
-              Tips & Guidelines for Your Journey
+              {selectedSection === 'tips' ? 'Tips & Guidelines for Your Journey' : 'Currency & Exchange Information'}
             </ThemedText>
           </View>
         </View>
       </View>
+
+      {/* Section Toggle */}
+      <ThemedView style={[styles.toggleContainer, { backgroundColor: colors.card }]}>
+        <ThemedText style={[styles.toggleLabel, { color: colors.text }]}>
+          Select Section
+        </ThemedText>
+        <View style={[styles.togglePill, { backgroundColor: '#E5E5E5' }]}>
+          <TouchableOpacity
+            style={[
+              styles.toggleOption,
+              {
+                backgroundColor: selectedSection === 'tips' ? colors.primary : 'transparent',
+              },
+            ]}
+            onPress={() => setSelectedSection('tips')}
+          >
+            <ThemedText
+              style={[
+                styles.toggleText,
+                {
+                  color: selectedSection === 'tips' ? '#FFFFFF' : '#000000',
+                },
+              ]}
+            >
+              Tips
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.toggleOption,
+              {
+                backgroundColor: selectedSection === 'currency' ? colors.primary : 'transparent',
+              },
+            ]}
+            onPress={() => setSelectedSection('currency')}
+          >
+            <ThemedText
+              style={[
+                styles.toggleText,
+                {
+                  color: selectedSection === 'currency' ? '#FFFFFF' : '#000000',
+                },
+              ]}
+            >
+              Currency
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
+      </ThemedView>
 
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Welcome Message */}
-        <ThemedView style={[styles.welcomeCard, { backgroundColor: colors.secondary }]}>
-          <ThemedText style={[styles.welcomeTitle, { color: colors.accent }]}>
-            Welcome to Pakistan! 🇵🇰
-          </ThemedText>
-          <ThemedText style={[styles.welcomeText, { color: colors.accent }]}>
-            These essential tips will help ensure your pilgrimage is safe, respectful, and memorable. 
-            Please read through each section carefully before your journey.
-          </ThemedText>
-        </ThemedView>
-
-        {/* Tips Cards */}
-        {essentialTips.map(renderTipCard)}
-
-        {/* Emergency Note */}
-        <ThemedView style={[styles.emergencyCard, { backgroundColor: '#FFF3E0', borderColor: '#FF9800' }]}>
-          <View style={styles.emergencyHeader}>
-            <IconSymbol name="exclamationmark.triangle.fill" size={24} color="#FF9800" />
-            <ThemedText type="subtitle" style={[styles.emergencyTitle, { color: '#E65100' }]}>
-              Important Reminder
-            </ThemedText>
-          </View>
-          <ThemedText style={[styles.emergencyText, { color: '#BF360C' }]}>
-            Always keep your emergency contacts accessible and inform someone about your daily itinerary. 
-            Use the Emergency tab in this app for quick access to help.
-          </ThemedText>
-        </ThemedView>
-
+        {selectedSection === 'tips' ? renderTipsSection() : renderCurrencySection()}
         <View style={styles.bottomSpacer} />
       </ScrollView>
     </SafeAreaView>
@@ -206,6 +438,41 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.8,
   },
+  toggleContainer: {
+    borderRadius: 16,
+    padding: 20,
+    marginHorizontal: 20,
+    marginVertical: 16,
+  },
+  toggleLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 16,
+  },
+  togglePill: {
+    flexDirection: 'row',
+    borderRadius: 25,
+    padding: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  toggleOption: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 18,
+    minHeight: 36,
+  },
+  toggleText: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
   scrollView: {
     flex: 1,
   },
@@ -225,6 +492,14 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 16,
     lineHeight: 24,
+  },
+  sectionContainer: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 16,
   },
   tipCard: {
     padding: 20,
@@ -277,6 +552,58 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 22,
     flex: 1,
+  },
+  rateCard: {
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  rateHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  currencyInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  flagIcon: {
+    fontSize: 28,
+    marginRight: 12,
+  },
+  currencyDetails: {
+    flex: 1,
+  },
+  currencyName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  currencySymbol: {
+    fontSize: 14,
+    opacity: 0.7,
+  },
+  rateContainer: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
+  exchangeRate: {
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  rateNotes: {
+    fontSize: 13,
+    fontStyle: 'italic',
+    lineHeight: 18,
   },
   emergencyCard: {
     padding: 16,
