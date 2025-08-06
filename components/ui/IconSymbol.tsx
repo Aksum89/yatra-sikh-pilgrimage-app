@@ -35,6 +35,8 @@ const MAPPING = {
   'mappin.and.ellipse': 'place',
   'phone.fill': 'phone',
   'checkmark.circle.fill': 'check-circle',
+  'backpack': 'backpack',
+  'phone.circle.fill': 'phone',
 } as IconMapping;
 
 /**
