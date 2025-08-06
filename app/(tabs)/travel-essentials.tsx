@@ -291,9 +291,19 @@ export default function TravelEssentialsScreen() {
       {/* Exchange Rates */}
       <ThemedView style={styles.sectionContainer}>
         <ThemedText type="subtitle" style={[styles.sectionTitle, { color: colors.text }]}>
-          Exchange Rates
+          Current Exchange Rates
         </ThemedText>
-        {exchangeRates.map(renderExchangeRateCard)}
+        <View style={styles.ratesGrid}>
+          {exchangeRates.slice(0, 4).map(renderExchangeRateCard)}
+        </View>
+        {exchangeRates.length > 4 && (
+          <View style={styles.additionalRates}>
+            <ThemedText style={[styles.additionalRatesTitle, { color: colors.text }]}>
+              Additional Currencies
+            </ThemedText>
+            {exchangeRates.slice(4).map(renderExchangeRateCard)}
+          </View>
+        )}
       </ThemedView>
 
       {/* Currency Tips */}
@@ -439,34 +449,34 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   toggleContainer: {
-    borderRadius: 16,
-    padding: 20,
+    borderRadius: 12,
+    padding: 12,
     marginHorizontal: 20,
-    marginVertical: 16,
+    marginVertical: 8,
   },
   toggleLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   togglePill: {
     flexDirection: 'row',
-    borderRadius: 25,
-    padding: 4,
+    borderRadius: 20,
+    padding: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 2,
+    elevation: 1,
   },
   toggleOption: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    borderRadius: 18,
-    minHeight: 36,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+    borderRadius: 16,
+    minHeight: 28,
   },
   toggleText: {
     fontSize: 14,
@@ -477,29 +487,29 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 20,
+    padding: 16,
   },
   welcomeCard: {
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 20,
-  },
-  welcomeTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    padding: 12,
+    borderRadius: 10,
     marginBottom: 12,
   },
-  welcomeText: {
+  welcomeTitle: {
     fontSize: 16,
-    lineHeight: 24,
+    fontWeight: 'bold',
+    marginBottom: 6,
+  },
+  welcomeText: {
+    fontSize: 13,
+    lineHeight: 18,
   },
   sectionContainer: {
-    marginBottom: 24,
+    marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
-    marginBottom: 16,
+    marginBottom: 10,
   },
   tipCard: {
     padding: 20,
@@ -554,21 +564,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rateCard: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 8,
     borderWidth: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 1,
   },
   rateHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   currencyInfo: {
     flexDirection: 'row',
@@ -576,34 +586,37 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flagIcon: {
-    fontSize: 28,
-    marginRight: 12,
+    fontSize: 20,
+    marginRight: 8,
   },
   currencyDetails: {
     flex: 1,
   },
   currencyName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   currencySymbol: {
-    fontSize: 14,
+    fontSize: 12,
     opacity: 0.7,
   },
   rateContainer: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+    minWidth: 80,
   },
   exchangeRate: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '700',
+    textAlign: 'center',
   },
   rateNotes: {
-    fontSize: 13,
+    fontSize: 11,
     fontStyle: 'italic',
-    lineHeight: 18,
+    lineHeight: 14,
+    opacity: 0.8,
   },
   emergencyCard: {
     padding: 16,
@@ -627,5 +640,17 @@ const styles = StyleSheet.create({
   },
   bottomSpacer: {
     height: 20,
+  },
+  ratesGrid: {
+    gap: 8,
+  },
+  additionalRates: {
+    marginTop: 12,
+  },
+  additionalRatesTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 8,
+    opacity: 0.8,
   },
 });
