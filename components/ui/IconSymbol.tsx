@@ -35,7 +35,7 @@ const MAPPING = {
   'mappin.and.ellipse': 'place',
   'phone.fill': 'phone',
   'checkmark.circle.fill': 'check-circle',
-  'backpack': 'backpack',
+  'backpack': 'travel-explore',
   'phone.circle.fill': 'phone',
 } as IconMapping;
 
@@ -57,9 +57,9 @@ export function IconSymbol({
   weight?: SymbolWeight;
 }) {
   const mappedName = MAPPING[name];
-  
+
   // Fallback to a default icon if mapping doesn't exist
   const iconName = mappedName || 'help';
-  
+
   return <MaterialIcons color={color} size={size} name={iconName} style={style} />;
 }
