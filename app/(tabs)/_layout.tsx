@@ -41,6 +41,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="travel-essentials"
+        options={{
+          title: 'Essentials',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="backpack" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="gurdwaras"
         options={{
           href: null, // Hide from tab bar
